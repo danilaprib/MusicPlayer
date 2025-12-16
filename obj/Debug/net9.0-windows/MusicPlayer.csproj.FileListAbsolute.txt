@@ -21,3 +21,4 @@ C:\Users\danii\Desktop\coding\MusicPlayer\obj\Debug\net9.0-windows\ref\MusicPlay
 C:\Users\danii\Desktop\coding\MusicPlayer\bin\Debug\net9.0-windows\Music\03 - Somewhere I Belong.mp3
 C:\Users\danii\Desktop\coding\MusicPlayer\bin\Debug\net9.0-windows\Music\13 - Numb.mp3
 C:\Users\danii\Desktop\coding\MusicPlayer\obj\Debug\net9.0-windows\MusicPlayer_Content.g.cs
+C:\Users\danii\Desktop\coding\MusicPlayer\obj\Debug\net9.0-windows\MusicPlayer.sourcelink.json

@@ -3,12 +3,16 @@
   "WorkspaceRootPath": "C:\\Users\\danii\\Desktop\\coding\\MusicPlayer\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{62082A25-5D1E-4E3C-A211-8E17D9F3A003}|MusicPlayer.csproj|c:\\users\\danii\\desktop\\coding\\musicplayer\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{62082A25-5D1E-4E3C-A211-8E17D9F3A003}|MusicPlayer.csproj|solutionrelative:mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{62082A25-5D1E-4E3C-A211-8E17D9F3A003}|MusicPlayer.csproj|c:\\users\\danii\\desktop\\coding\\musicplayer\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
       "RelativeMoniker": "D:0:0:{62082A25-5D1E-4E3C-A211-8E17D9F3A003}|MusicPlayer.csproj|solutionrelative:mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{62082A25-5D1E-4E3C-A211-8E17D9F3A003}|MusicPlayer.csproj|c:\\users\\danii\\desktop\\coding\\musicplayer\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{62082A25-5D1E-4E3C-A211-8E17D9F3A003}|MusicPlayer.csproj|solutionrelative:mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{62082A25-5D1E-4E3C-A211-8E17D9F3A003}|MusicPlayer.csproj|c:\\users\\danii\\desktop\\coding\\musicplayer\\assemblyinfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{62082A25-5D1E-4E3C-A211-8E17D9F3A003}|MusicPlayer.csproj|solutionrelative:assemblyinfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -32,7 +36,7 @@
         },
         {
           "DockedHeight": 260,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Bookmark",
@@ -40,7 +44,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
+              "Title": "AssemblyInfo.cs",
+              "DocumentMoniker": "C:\\Users\\danii\\Desktop\\coding\\MusicPlayer\\AssemblyInfo.cs",
+              "RelativeDocumentMoniker": "AssemblyInfo.cs",
+              "ToolTip": "C:\\Users\\danii\\Desktop\\coding\\MusicPlayer\\AssemblyInfo.cs",
+              "RelativeToolTip": "AssemblyInfo.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-16T19:29:00.704Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
               "Title": "MainWindow.xaml",
               "DocumentMoniker": "C:\\Users\\danii\\Desktop\\coding\\MusicPlayer\\MainWindow.xaml",
               "RelativeDocumentMoniker": "MainWindow.xaml",
@@ -52,15 +69,16 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "MainWindow.xaml.cs",
               "DocumentMoniker": "C:\\Users\\danii\\Desktop\\coding\\MusicPlayer\\MainWindow.xaml.cs",
               "RelativeDocumentMoniker": "MainWindow.xaml.cs",
               "ToolTip": "C:\\Users\\danii\\Desktop\\coding\\MusicPlayer\\MainWindow.xaml.cs",
               "RelativeToolTip": "MainWindow.xaml.cs",
-              "ViewState": "AgIAABEAAAAAAAAAAAAAwCsAAAAJAAAAAAAAAA==",
+              "ViewState": "AgIAAKUAAAAAAAAAAAAIwLEAAAAwAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-15T14:20:44.411Z"
+              "WhenOpened": "2025-12-15T14:20:44.411Z",
+              "EditorCaption": ""
             }
           ]
         },
