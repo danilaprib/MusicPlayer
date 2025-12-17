@@ -11,6 +11,14 @@
       "RelativeMoniker": "D:0:0:{62082A25-5D1E-4E3C-A211-8E17D9F3A003}|MusicPlayer.csproj|solutionrelative:mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{62082A25-5D1E-4E3C-A211-8E17D9F3A003}|MusicPlayer.csproj|c:\\users\\danii\\desktop\\coding\\musicplayer\\commands\\playercommands.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{62082A25-5D1E-4E3C-A211-8E17D9F3A003}|MusicPlayer.csproj|solutionrelative:commands\\playercommands.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{62082A25-5D1E-4E3C-A211-8E17D9F3A003}|MusicPlayer.csproj|c:\\users\\danii\\desktop\\coding\\musicplayer\\musicplayer.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{62082A25-5D1E-4E3C-A211-8E17D9F3A003}|MusicPlayer.csproj|solutionrelative:musicplayer.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{62082A25-5D1E-4E3C-A211-8E17D9F3A003}|MusicPlayer.csproj|c:\\users\\danii\\desktop\\coding\\musicplayer\\assemblyinfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{62082A25-5D1E-4E3C-A211-8E17D9F3A003}|MusicPlayer.csproj|solutionrelative:assemblyinfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
@@ -36,7 +44,7 @@
         },
         {
           "DockedHeight": 260,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 5,
           "Children": [
             {
               "$type": "Bookmark",
@@ -45,6 +53,31 @@
             {
               "$type": "Document",
               "DocumentIndex": 2,
+              "Title": "PlayerCommands.cs",
+              "DocumentMoniker": "C:\\Users\\danii\\Desktop\\coding\\MusicPlayer\\Commands\\PlayerCommands.cs",
+              "RelativeDocumentMoniker": "Commands\\PlayerCommands.cs",
+              "ToolTip": "C:\\Users\\danii\\Desktop\\coding\\MusicPlayer\\Commands\\PlayerCommands.cs",
+              "RelativeToolTip": "Commands\\PlayerCommands.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-17T17:13:00.127Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "MusicPlayer.csproj",
+              "DocumentMoniker": "C:\\Users\\danii\\Desktop\\coding\\MusicPlayer\\MusicPlayer.csproj",
+              "RelativeDocumentMoniker": "MusicPlayer.csproj",
+              "ToolTip": "C:\\Users\\danii\\Desktop\\coding\\MusicPlayer\\MusicPlayer.csproj",
+              "RelativeToolTip": "MusicPlayer.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-12-17T17:12:41.47Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "AssemblyInfo.cs",
               "DocumentMoniker": "C:\\Users\\danii\\Desktop\\coding\\MusicPlayer\\AssemblyInfo.cs",
               "RelativeDocumentMoniker": "AssemblyInfo.cs",
@@ -52,8 +85,7 @@
               "RelativeToolTip": "AssemblyInfo.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-16T19:29:00.704Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-16T19:29:00.704Z"
             },
             {
               "$type": "Document",
@@ -75,7 +107,7 @@
               "RelativeDocumentMoniker": "MainWindow.xaml.cs",
               "ToolTip": "C:\\Users\\danii\\Desktop\\coding\\MusicPlayer\\MainWindow.xaml.cs",
               "RelativeToolTip": "MainWindow.xaml.cs",
-              "ViewState": "AgIAAKUAAAAAAAAAAAAIwLEAAAAwAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAALMAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-12-15T14:20:44.411Z",
               "EditorCaption": ""

@@ -35,7 +35,12 @@
         </Style>
         <Style TargetType="Grid">
             <Setter Property="Background" Value="Gainsboro"></Setter>
-            
+        </Style>
+        <Style x:Key="CurrentTrackStyle" TargetType="TextBox">
+            <Setter Property="Background" Value="Gainsboro"></Setter>
+            <Setter Property="Foreground" Value="Black"></Setter>
+            <Setter Property="FontSize" Value="20"></Setter>
+            <Setter Property="BorderThickness" Value="0"></Setter>
         </Style>
     </Window.Resources>
     
@@ -82,19 +87,29 @@
                               Height="0" Width="0"/>
                 <Border BorderThickness="2px" BorderBrush="Black"></Border>
                 <StackPanel>
-                    <Label x:Name="PausedLabel" HorizontalAlignment="Center" FontSize="28px" Visibility="Hidden">(Paused)</Label>
+                    <Label x:Name="Status" HorizontalAlignment="Center" FontSize="28px" Visibility="Hidden"></Label>
 
 
-                    <Label HorizontalAlignment="Center" FontSize="28px"
-                           x:Name="CurrentTrack">
+
+                    <TextBox HorizontalAlignment="Center" FontSize="28px" IsReadOnly="True"
+                           x:Name="CurrentTrack" Style="{StaticResource CurrentTrackStyle}">
                         CurrentTrack
-                    </Label>
+                    </TextBox>
 
                     
                     <DockPanel LastChildFill="False">
-                        <TextBlock DockPanel.Dock="Left" FontSize="14" Margin="5px"> 
-                            0:01 / 1:16:22
-                        </TextBlock>
+                        <DockPanel LastChildFill="False">
+                            <TextBlock DockPanel.Dock="Left" FontSize="14" Margin="5px"
+                                       x:Name="Position" Text="{Binding CurrentPosition}"> 
+                            Position 
+                            </TextBlock>
+                            <TextBlock VerticalAlignment="Center">/</TextBlock>
+                            <TextBlock DockPanel.Dock="Right" FontSize="14" Margin="5px"
+                                       x:Name="Duration"> 
+                            NaturalDuration
+                            </TextBlock>
+                        </DockPanel>
+
                         <TextBlock DockPanel.Dock="Right" FontSize="14" Margin="5px">
                             time left: 1:16:21
                         </TextBlock>
@@ -108,7 +123,7 @@
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                         <Button x:Name="LoopBtn" Click="LoopBtn_Click"
                                 Style="{StaticResource ControlBtnStyle}">
-                            Loop
+                            loop OFF
                         </Button>
                         <Button x:Name="ReplayBtn" Click="ReplayBtn_Click"
                                 Style="{StaticResource ControlBtnStyle}">
@@ -136,21 +151,33 @@
                         </Button>
 
                         <DockPanel>
-                            <Slider x:Name="Volume" Minimum="0" Maximum="100" Width="100"
-                                 TickPlacement="BottomRight"
-                                 TickFrequency="10" DockPanel.Dock="Left">
-
-                            </Slider>
-                            <TextBox DockPanel.Dock="Right">
-                                100
+                            <TextBox DockPanel.Dock="Right" x:Name="CurrentVolume" IsReadOnly="True"
+                                     Width="40" TextAlignment="Right"
+                                     Text="{Binding ElementName=Volume, Path=Value, UpdateSourceTrigger=PropertyChanged}">
                             </TextBox>
+                            <Button x:Name="MuteBtn" Click="MuteBtn_Click"
+                                    Width="30" Height="30" FontSize="10"
+                                    VerticalAlignment="Center">
+                                Mute
+                            </Button>
+                            <Slider x:Name="Volume" Minimum="0" Maximum="1" Value="0.5"
+                                    Width="100" DockPanel.Dock="Left"
+                                    Background="Blue" Margin="2" VerticalAlignment="Center"
+                                    ValueChanged="Volume_ValueChanged">
+                            </Slider>
+
+
                         </DockPanel>
                     </StackPanel>
 
-                    <!-- is it not working because it is inside another stack panel?-->
                     <ScrollViewer Margin="10" VerticalScrollBarVisibility="Visible"
                                   HorizontalAlignment="Center" MaxHeight="450">
-                        <StackPanel HorizontalAlignment="Center" Margin="10px" MaxHeight="450"
+                        
+                        
+                        <!-- cant scroll whole list when window is shrinked
+                            and doesnt shrink normally when MainWindow is minimized
+                        -->
+                        <StackPanel HorizontalAlignment="Center" Margin="10px"
                                     x:Name="Tracklist">
                             <DockPanel>
                                 <TextBlock FontSize="18" VerticalAlignment="Center" FontStyle="Italic">1</TextBlock>
@@ -171,24 +198,56 @@
                     <DockPanel>
                         <Label>Dir</Label>
                         <TextBox x:Name="Dir" VerticalAlignment="Center" LostFocus="Dir_LostFocus">
-                            C:\Users\danii\Desktop\target
+                            C:\Users\danii\Desktop\target\HT
                         </TextBox>
                     </DockPanel>
                     <DockPanel>
                         <Label VerticalAlignment="Center">Autoscan</Label>
                         <CheckBox VerticalAlignment="Center"></CheckBox>
                     </DockPanel>
-                    <DockPanel>
-                        <Label>Speed</Label>
-                        <TextBox VerticalAlignment="Center">0.75</TextBox>
-                    </DockPanel>
+
+                    <Border Width="200" Height="50"
+                            BorderBrush="Blue" BorderThickness="2">
+                        <DockPanel Width="180">
+                            <Button x:Name="ResetSpeedBtn" Click="ResetSpeedBtn_Click"
+                                DockPanel.Dock="Left" HorizontalAlignment="Center"
+                                Width="40" Height="20">
+                                Reset
+                            </Button>
+                            <Slider Maximum="2" Minimum="0.1" Value="1"
+                                Margin="10" x:Name="Speed"
+                                VerticalAlignment="Center" Width="100"
+                                ValueChanged="Speed_ValueChanged"></Slider>
+                            <TextBox Width="20" Height="20" TextAlignment="Center" IsReadOnly="True"
+                                Text="{Binding ElementName=Speed, Path=Value, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                        </DockPanel>
+                    </Border>
+
                     <DockPanel>
                         <Label>Search</Label>
                         <TextBox VerticalAlignment="Center" Foreground="Silver">Search tracks by name here...</TextBox>
                     </DockPanel>
-                    <Slider Maximum="100" Width="120" Margin="10" TickPlacement="BottomRight" TickFrequency="25">
-                        
-                    </Slider>
+
+
+                    <Border Width="140"
+                            BorderBrush="Blue" BorderThickness="2">
+                        <DockPanel Width="120">
+
+                            <Label DockPanel.Dock="Left" VerticalAlignment="Center">L</Label>
+                            <Label DockPanel.Dock="Right" VerticalAlignment="Center">R</Label>
+                            <Button x:Name="ResetBalanceBtn" Click="ResetBalanceBtn_Click"
+                                DockPanel.Dock="Bottom" HorizontalAlignment="Center"
+                                Width="40">
+                                Reset
+                            </Button>
+                            <Slider Maximum="1" Minimum="-1" Value="0"
+                                Margin="10" x:Name="Balance"
+                                VerticalAlignment="Center"
+                                ValueChanged="Balance_ValueChanged"></Slider>
+                        </DockPanel>
+                    </Border>
+
+
                 </StackPanel>
             </Grid>
         </Grid>
