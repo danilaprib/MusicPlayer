@@ -28,10 +28,15 @@
             <Setter Property="Background" Value="Gainsboro"></Setter>
             <Setter Property="FontSize" Value="18px"></Setter>
             <Setter Property="Foreground" Value="Black"></Setter>
-            <Setter Property="Width" Value="Auto"></Setter>
             <Setter Property="Height" Value="30px"></Setter>
-            <Setter Property="Margin" Value="1px"></Setter>
             <Setter Property="BorderBrush" Value="Gainsboro"></Setter>
+            <Setter Property="VerticalAlignment" Value="Center"></Setter>
+        </Style>
+        <Style x:Key="TrackIndexStyle" TargetType="Label">
+            <Setter Property="FontSize" Value="18"></Setter>
+            <Setter Property="VerticalAlignment" Value="Center"></Setter>
+            <Setter Property="FontStyle" Value="Italic"></Setter>
+            <Setter Property="Height" Value="48px"></Setter>
         </Style>
         <Style TargetType="Grid">
             <Setter Property="Background" Value="Gainsboro"></Setter>
@@ -54,8 +59,8 @@
 
         <Grid Grid.Row="0">
 
-            <StackPanel>
-                <Menu VerticalAlignment="Top">
+            <DockPanel LastChildFill="False">
+                <Menu VerticalAlignment="Top" DockPanel.Dock="Top">
                     <MenuItem Header="File" FontSize="16"></MenuItem>
                     <MenuItem Header="Settings" FontSize="16"></MenuItem>
                     <MenuItem Header="Themes" FontSize="16"></MenuItem>
@@ -64,13 +69,13 @@
                 </Menu>
 
                 <StackPanel Orientation="Horizontal" Height="30"
-                            VerticalAlignment="Bottom">
-                    <Button Style="{StaticResource PanelBtnStyle}"></Button>
-                    <Button Style="{StaticResource PanelBtnStyle}"></Button>
-                    <Button Style="{StaticResource PanelBtnStyle}"></Button>
-                    <Button Style="{StaticResource PanelBtnStyle}"></Button>
+                           DockPanel.Dock="Top">
+                    <Button>
+                        <Image Source="./Icons/OpenIcon.png"></Image>
+                    </Button>
                 </StackPanel>
-            </StackPanel>
+            </DockPanel>
+            
         </Grid>
 
         <Grid Grid.Row="1">
@@ -122,32 +127,28 @@
                     
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                         <Button x:Name="LoopBtn" Click="LoopBtn_Click"
-                                Style="{StaticResource ControlBtnStyle}">
+                                Style="{StaticResource ControlBtnStyle}" Background="Red">
                             loop OFF
                         </Button>
                         <Button x:Name="ReplayBtn" Click="ReplayBtn_Click"
                                 Style="{StaticResource ControlBtnStyle}">
-                            Replay
+                            <Image Source="./Icons/ReplayIcon.png"></Image>
                         </Button>
-                        <Button x:Name="Previous" Click="Previous_Click"
+                        <Button x:Name="PrevBtn" Click="PrevBtn_Click"
                                 Style="{StaticResource ControlBtnStyle}">
-                            &lt; &lt;
+                            <Image Source="./Icons/PrevIcon.png"></Image>
                         </Button>
-                        <Button x:Name="StopBtn" Click="StopBtn_Click"
+                        <Button x:Name="StopBtn" Click="StopBtn_Click" 
                                 Style="{StaticResource ControlBtnStyle}">
-                            Stop
+                            <Image Source="./Icons/StopIcon.png"></Image>
                         </Button>
-                        <Button x:Name="PlayBtn" Click="PlayBtn_Click"
+                        <Button x:Name="PlayPauseBtn" Click="PlayPauseBtn_Click"
                                 Style="{StaticResource ControlBtnStyle}">
-                            Play
+                            <Image Source="./Icons/PlayIcon.png"></Image>
                         </Button>
-                        <Button x:Name="PauseBtn" Click="PauseBtn_Click"
+                        <Button x:Name="NextBtn" Click="NextBtn_Click"
                                 Style="{StaticResource ControlBtnStyle}">
-                            Pause
-                        </Button>
-                        <Button x:Name="Next" Click="Next_Click"
-                                Style="{StaticResource ControlBtnStyle}">
-                            &gt; &gt;
+                            <Image Source="./Icons/NextIcon.png"></Image>
                         </Button>
 
                         <DockPanel>
@@ -156,9 +157,10 @@
                                      Text="{Binding ElementName=Volume, Path=Value, UpdateSourceTrigger=PropertyChanged}">
                             </TextBox>
                             <Button x:Name="MuteBtn" Click="MuteBtn_Click"
-                                    Width="30" Height="30" FontSize="10"
+                                    Style="{StaticResource PanelBtnStyle}" FontSize="10"
+                                    Width="40" Height="25" Background="Blue"
                                     VerticalAlignment="Center">
-                                Mute
+                                <Image Source="./Icons/MuteIcon.png"></Image>
                             </Button>
                             <Slider x:Name="Volume" Minimum="0" Maximum="1" Value="0.5"
                                     Width="100" DockPanel.Dock="Left"
@@ -170,25 +172,21 @@
                         </DockPanel>
                     </StackPanel>
 
-                    <ScrollViewer Margin="10" VerticalScrollBarVisibility="Visible"
-                                  HorizontalAlignment="Center" MaxHeight="450">
-                        
-                        
-                        <!-- cant scroll whole list when window is shrinked
-                            and doesnt shrink normally when MainWindow is minimized
-                        -->
-                        <StackPanel HorizontalAlignment="Center" Margin="10px"
-                                    x:Name="Tracklist">
-                            <DockPanel>
-                                <TextBlock FontSize="18" VerticalAlignment="Center" FontStyle="Italic">1</TextBlock>
-                                <Button Style="{StaticResource TrackNameStyle}">
-                                    hello
+
+                    <ScrollViewer>
+                        <DockPanel x:Name="Tracklist" Margin="2">
+                            <StackPanel x:Name="TrackIndexes" DockPanel.Dock="Left" VerticalAlignment="Center" Orientation="Vertical">
+                                <Label Style="{StaticResource TrackIndexStyle}">1</Label>
+                            </StackPanel>
+
+                            <StackPanel x:Name="TrackNames" DockPanel.Dock="Right" VerticalAlignment="Center" Orientation="Vertical">
+                                <Button VerticalAlignment="Center" Style="{StaticResource TrackNameStyle}">
+                                    TRACK
                                 </Button>
-                            </DockPanel>
-
-                        </StackPanel>
+                            </StackPanel>
+                        </DockPanel>
                     </ScrollViewer>
-
+                    
                 </StackPanel>
             </Grid>
 
@@ -196,13 +194,15 @@
                 <Border BorderThickness="2px" BorderBrush="Black"></Border>
                 <StackPanel>
                     <DockPanel>
-                        <Label>Dir</Label>
-                        <TextBox x:Name="Dir" VerticalAlignment="Center" LostFocus="Dir_LostFocus">
+                        <Label FontSize="18">Path</Label>
+                        <TextBox x:Name="Dir" VerticalAlignment="Center" LostFocus="Dir_LostFocus" FontSize="18">
                             C:\Users\danii\Desktop\target\HT
                         </TextBox>
                     </DockPanel>
                     <DockPanel>
                         <Label VerticalAlignment="Center">Autoscan</Label>
+                        <CheckBox VerticalAlignment="Center"></CheckBox>
+                        <Label VerticalAlignment="Center">Sort</Label>
                         <CheckBox VerticalAlignment="Center"></CheckBox>
                     </DockPanel>
 

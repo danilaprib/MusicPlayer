@@ -9,17 +9,60 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Music\03 - Somewhere I Belong.mp3" />
-    <None Remove="Music\13 - Numb.mp3" />
+    <Compile Remove="Music\**" />
+    <EmbeddedResource Remove="Music\**" />
+    <None Remove="Music\**" />
+    <Page Remove="Music\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Music\03 - Somewhere I Belong.mp3">
+    <None Remove="Icons\LoopIcon.png" />
+    <None Remove="Icons\MuteIcon.png" />
+    <None Remove="Icons\NextIcon.png" />
+    <None Remove="Icons\OpenIcon.png" />
+    <None Remove="Icons\OpenIcon2.png" />
+    <None Remove="Icons\PauseIcon.png" />
+    <None Remove="Icons\PlayIcon.png" />
+    <None Remove="Icons\PrevIcon.png" />
+    <None Remove="Icons\ReplayIcon.png" />
+    <None Remove="Icons\StopIcon.png" />
+    <None Remove="Icons\StopPressedIcon.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Icons\LoopIcon.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Music\13 - Numb.mp3">
+    </Resource>
+    <Resource Include="Icons\MuteIcon.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    </Resource>
+    <Resource Include="Icons\NextIcon.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icons\OpenIcon.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icons\OpenIcon2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icons\PauseIcon.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icons\PlayIcon.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icons\PrevIcon.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icons\ReplayIcon.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icons\StopIcon.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icons\StopPressedIcon.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
 </Project>

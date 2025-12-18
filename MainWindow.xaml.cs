@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks.Dataflow;
 using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
@@ -22,7 +23,7 @@ namespace MusicPlayer
     /// </summary>
     public partial class MainWindow : Window, INotifyPropertyChanged
     {
-        int CURRENT_TRACK_INDEX;
+        int CURRENT_TRACK_INDEX = 0;
 
         string _currentPosition;
 
@@ -41,8 +42,7 @@ namespace MusicPlayer
         public event PropertyChangedEventHandler? PropertyChanged;
 
         bool isLooped;
-
-        //System.Timers.Timer _timer;
+        bool isPaused = false;
 
         public MainWindow()
         {
@@ -52,12 +52,6 @@ namespace MusicPlayer
 
             this.Dir_LostFocus(this, null);
 
-
-
-            //using (_timer = new System.Timers.Timer(1000));
-            //_timer.AutoReset = true;
-            //_timer.Enabled = true;
-
         }
 
         private void LoopBtn_Click(object sender, RoutedEventArgs e)
@@ -66,12 +60,13 @@ namespace MusicPlayer
             if (isLooped)
             {
                 LoopBtn.Content = "loop ON";
+                LoopBtn.Background = new SolidColorBrush(Colors.Blue);
             }
             else
             {
                 LoopBtn.Content = "loop OFF";
+                LoopBtn.Background = new SolidColorBrush(Colors.Red);
             }
-            Debug.WriteLine("LOOP button pressed");
         }
 
         private void StopBtn_Click(object sender, RoutedEventArgs e)
@@ -79,8 +74,7 @@ namespace MusicPlayer
             player.Stop();
             Status.Visibility = Visibility.Visible;
             Status.Content = "(Stopped)";
-
-            PauseBtn.IsEnabled = false;
+            isPaused = true;
         }
 
         private void PlayBtn_Click(object sender, RoutedEventArgs e)
@@ -88,9 +82,6 @@ namespace MusicPlayer
             player.Play();
             Status.Visibility = Visibility.Hidden;
             Status.Content = string.Empty;
-
-
-            PauseBtn.IsEnabled = true;
         }
 
         private void PauseBtn_Click(object sender, RoutedEventArgs e)
@@ -106,58 +97,59 @@ namespace MusicPlayer
 
         private void Dir_LostFocus(object sender, RoutedEventArgs e)
         {
+            CURRENT_TRACK_INDEX = 0;
+
             var dir = Dir.Text;
             if (!Directory.Exists(dir))
             {
                 return;
             }
-            Tracklist.Children.Clear();
+            TrackNames.Children.Clear();
+            TrackIndexes.Children.Clear();
+
             tracks = Directory.GetFiles(dir, "*.mp3");
 
             for(int i = 0; i < tracks.Length; i++)
             {
-                DockPanel panel = new DockPanel();
-
-                TextBlock index = new TextBlock();
-                index.FontSize = 18;
-                index.Text = i.ToString();
-                index.VerticalAlignment = VerticalAlignment.Center;
-                index.FontStyle = FontStyles.Italic;
-
-                Button button = new Button();
+                Button btn = new Button();
                 var style = TryFindResource("TrackNameStyle");
                 if (style != null)
                 {
-                    button.Style = (Style)style;
+                    btn.Style = (Style)style;
                 }
-                    
-                button.Click += TrackBtn_Click;
+                btn.Click += TrackBtn_Click;
 
                 string trackName = tracks[i].Remove(0, dir.Length + 1);
-                button.Content = trackName;
+                btn.Content = trackName;
 
-                DockPanel.SetDock(button, Dock.Left);
-                panel.Children.Add(button);
+                TrackNames.Children.Add(btn);
 
+                Label index = new Label();
 
-                DockPanel.SetDock(button, Dock.Right);
-                panel.Children.Add(index);
+                index.FontSize = 18;
+                var temp = i + 1;
+                index.Content = temp.ToString();
+                index.VerticalAlignment = VerticalAlignment.Center;
+                index.FontStyle = FontStyles.Italic;
 
-                Tracklist.Children.Add(panel);
+                TrackIndexes.Children.Add(index);
             }
         }
 
         private void TrackBtn_Click(Object sender, RoutedEventArgs e)
         {
             Status.Content = string.Empty;
-            PauseBtn.IsEnabled = true;
 
             var btn = (Button)sender;
             var trackname = btn.Content as string;
             
             var fullPath = System.IO.Path.Combine(Dir.Text, trackname);
-            CURRENT_TRACK_INDEX = Tracklist.Children.IndexOf(btn); // because btn is inside dock panel it returns -1
-            // better use 2 separate stack panels (1 for indexes 1 for track names) and dock these stackpanels to a dockpanel
+
+
+            CURRENT_TRACK_INDEX = TrackNames.Children.IndexOf(btn);
+
+            Debug.WriteLine("CURRENT_TRACK_INDEX: " + CURRENT_TRACK_INDEX);
+
             if (trackname != null)
             {
                 CurrentTrack.Text = trackname;
@@ -165,54 +157,28 @@ namespace MusicPlayer
                 player.Source = new Uri(fullPath);
                 player.Play();
             }
-            //Duration.Text = player.NaturalDuration.ToString();
-            //Position.Text = player.Position.ToString();
-
-            //var timer = new System.Timers.Timer(1000);
-            //timer.
-            //timer.Elapsed += OnTimedEvent;
-            //timer.AutoReset = true;
-            //timer.Enabled = true;
-
-            //_timer = timer;
-            //_timer.Enabled = true;
-            //_timer.Start();
-
-
-            //posThread.Start();
-
-
-            //Debug.WriteLine("timer: " + _timer.);
         }
-
-
-
-        //void OnTimedEvent(Object sender, ElapsedEventArgs e)
-        //{
-        //    CurrentPosition = player.Position.ToString(@"hh\:mm\:ss");
-        //    Debug.WriteLine("position:  " + player.Position.ToString(@"hh\:mm\:ss"));
-        //    Debug.WriteLine("timer: " + e.SignalTime);
-        //}
 
         private void ReplayBtn_Click(object sender, RoutedEventArgs e)
         {
             Status.Content = string.Empty;
-            PauseBtn.IsEnabled = true;
             player.Stop();
             player.Play();
         }
 
-        private void Previous_Click(object sender, RoutedEventArgs e)
+        private void PrevBtn_Click(object sender, RoutedEventArgs e)
         {
             if (CURRENT_TRACK_INDEX == 0)
             {
-                return;
+                // to jump to end
+                CURRENT_TRACK_INDEX = TrackIndexes.Children.Count;
             }
             CURRENT_TRACK_INDEX--;
 
-            var track = (DockPanel)Tracklist.Children[CURRENT_TRACK_INDEX];
 
-            var btn = (Button)track.Children[0];
+            //var track = (DockPanel)Tracklist.Children[CURRENT_TRACK_INDEX];
+
+            var btn = (Button)TrackNames.Children[CURRENT_TRACK_INDEX];
             var trackname = btn.Content as string;
             var fullPath = System.IO.Path.Combine(Dir.Text, trackname);
 
@@ -225,17 +191,21 @@ namespace MusicPlayer
             }
         }
 
-        private void Next_Click(object sender, RoutedEventArgs e)
+        private void NextBtn_Click(object sender, RoutedEventArgs e)
         {
-            if (CURRENT_TRACK_INDEX == Tracklist.Children.Count)
+            if (CURRENT_TRACK_INDEX == TrackIndexes.Children.Count - 1)
             {
-                return;
+                // to jump to beginning
+                CURRENT_TRACK_INDEX = -1;
             }
             CURRENT_TRACK_INDEX++;
 
-            var track = (DockPanel)Tracklist.Children[CURRENT_TRACK_INDEX];
+            //var track = (DockPanel)Tracklist.Children[CURRENT_TRACK_INDEX];
 
-            var btn = (Button)track.Children[0];
+            //var btn = (Button)track.Children[0];
+            //var trackname = btn.Content as string;
+            //var fullPath = System.IO.Path.Combine(Dir.Text, trackname);
+            var btn = (Button)TrackNames.Children[CURRENT_TRACK_INDEX];
             var trackname = btn.Content as string;
             var fullPath = System.IO.Path.Combine(Dir.Text, trackname);
 
@@ -257,7 +227,7 @@ namespace MusicPlayer
             }
             else
             {
-                this.Next_Click(this, null);
+                this.NextBtn_Click(this, null);
             }
         }
 
@@ -273,10 +243,6 @@ namespace MusicPlayer
             var vol = (volSlider.Value);
 
             player.Volume = vol;
-            //CurrentVolume.Text = (vol * 100).ToString();
-            //var vol = 
-            //string msg = String.Format("Current value: {0}", e.NewValue);
-            //this.textBlock1.Text = msg;
         }
 
         private void Balance_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
@@ -298,13 +264,13 @@ namespace MusicPlayer
             player.IsMuted = !player.IsMuted;
             if (player.IsMuted)
             {
-                Color color = Color.FromRgb(255, 0, 0);
-                Volume.Background = new SolidColorBrush(color);
+                Volume.Background = new SolidColorBrush(Colors.Red);
+                MuteBtn.Background = new SolidColorBrush(Colors.Red);
             }
             else
             {
-                Color color = Color.FromRgb(0, 0, 255);
-                Volume.Background = new SolidColorBrush(color);
+                Volume.Background = new SolidColorBrush(Colors.Blue);
+                MuteBtn.Background = new SolidColorBrush(Colors.Blue);
             }
         }
 
@@ -314,13 +280,28 @@ namespace MusicPlayer
 
             var vol = balanceSlider.Value;
 
-            //player.Pause();
             player.SpeedRatio = vol;
-            //player.Play();
         }
         private void ResetSpeedBtn_Click(object sender, RoutedEventArgs e)
         {
             Speed.Value = 1;
+        }
+
+        private void PlayPauseBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (player.CanPause && !isPaused)
+            {
+                player.Pause();
+                isPaused = !isPaused;
+                PlayPauseBtn.Background = new SolidColorBrush(Colors.Red);
+            }
+            else if (isPaused)
+            {
+                player.Play();
+                isPaused = !isPaused;
+                Status.Content = string.Empty;
+                PlayPauseBtn.Background = new SolidColorBrush(Colors.Blue);
+            }
         }
     }
 }
