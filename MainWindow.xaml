@@ -104,10 +104,11 @@
                     
                     <DockPanel LastChildFill="False">
                         <DockPanel LastChildFill="False">
-                            <TextBlock DockPanel.Dock="Left" FontSize="14" Margin="5px"
-                                       x:Name="Position" Text="{Binding CurrentPosition}"> 
-                            Position 
-                            </TextBlock>
+                            <!-- change to TextBox to copy and set the position -->
+                            <TextBox DockPanel.Dock="Left" FontSize="14" Margin="5px"
+                                       x:Name="Position" Text="{Binding CurrentPosition, UpdateSourceTrigger=PropertyChanged}" Width="120"
+                                     IsReadOnly="True" Background="Gainsboro" Foreground="Black" BorderThickness="0"> 
+                            </TextBox>
                             <TextBlock VerticalAlignment="Center">/</TextBlock>
                             <TextBlock DockPanel.Dock="Right" FontSize="14" Margin="5px"
                                        x:Name="Duration"> 

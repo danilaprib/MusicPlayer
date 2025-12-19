@@ -2,6 +2,7 @@
 using System.Configuration;
 using System.Diagnostics;
 using System.IO;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks.Dataflow;
@@ -25,27 +26,37 @@ namespace MusicPlayer
     {
         int CURRENT_TRACK_INDEX = 0;
 
+        System.Timers.Timer _timer;
+        DateTime _timerStartedAt;
+
         string _currentPosition;
 
         public string CurrentPosition
         {
-            get => _currentPosition;
+            get { return _currentPosition; } 
             set
             {
                 _currentPosition = value;
-                PropertyChanged?.Invoke(this, null);
+                OnPropertyChanged();
             }
         }
 
         string[] tracks;
 
-        public event PropertyChangedEventHandler? PropertyChanged;
-
         bool isLooped;
         bool isPaused = false;
 
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        public void OnPropertyChanged([CallerMemberName] string val = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(val));
+            //Position.Text = CurrentPosition;
+        }
+
         public MainWindow()
         {
+            DataContext = this;
             InitializeComponent();
             isLooped = false;
             CURRENT_TRACK_INDEX = 0;
@@ -75,6 +86,10 @@ namespace MusicPlayer
             Status.Visibility = Visibility.Visible;
             Status.Content = "(Stopped)";
             isPaused = true;
+
+
+            _timer.Stop();
+            _timer.Dispose();
         }
 
         private void PlayBtn_Click(object sender, RoutedEventArgs e)
@@ -138,6 +153,11 @@ namespace MusicPlayer
 
         private void TrackBtn_Click(Object sender, RoutedEventArgs e)
         {
+            _timer = new System.Timers.Timer();
+            _timer.Interval = 1000;
+            _timer.AutoReset = true;
+            _timer.Elapsed += timer_Elapsed;
+
             Status.Content = string.Empty;
 
             var btn = (Button)sender;
@@ -150,6 +170,7 @@ namespace MusicPlayer
 
             Debug.WriteLine("CURRENT_TRACK_INDEX: " + CURRENT_TRACK_INDEX);
 
+
             if (trackname != null)
             {
                 CurrentTrack.Text = trackname;
@@ -157,6 +178,17 @@ namespace MusicPlayer
                 player.Source = new Uri(fullPath);
                 player.Play();
             }
+
+
+            _timer.Start();
+            _timerStartedAt = DateTime.Now;
+        }
+
+        private void timer_Elapsed(object? sender, ElapsedEventArgs e)
+        {
+            var curPos = e.SignalTime - _timerStartedAt;
+            CurrentPosition = curPos.ToString(@"hh\:mm\:ss");
+            Debug.WriteLine("POSITION: " + CurrentPosition);
         }
 
         private void ReplayBtn_Click(object sender, RoutedEventArgs e)
@@ -222,8 +254,16 @@ namespace MusicPlayer
         {
             if (isLooped)
             {
+                _timer = new System.Timers.Timer();
+                _timer.Interval = 1000;
+                _timer.AutoReset = true;
+                _timer.Elapsed += timer_Elapsed;
+
                 player.Stop();
                 player.Play();
+
+                _timer.Start();
+                _timerStartedAt = DateTime.Now;
             }
             else
             {
@@ -292,12 +332,14 @@ namespace MusicPlayer
             if (player.CanPause && !isPaused)
             {
                 player.Pause();
+                _timer.Stop();
                 isPaused = !isPaused;
                 PlayPauseBtn.Background = new SolidColorBrush(Colors.Red);
             }
             else if (isPaused)
             {
                 player.Play();
+                _timer.Start();
                 isPaused = !isPaused;
                 Status.Content = string.Empty;
                 PlayPauseBtn.Background = new SolidColorBrush(Colors.Blue);
