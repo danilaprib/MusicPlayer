@@ -17,6 +17,10 @@
 
   <ItemGroup>
     <None Remove="Icons\LoopIcon.png" />
+    <None Remove="Icons\MoveToPrevDirIcon.png" />
+    <None Remove="Icons\MusicPlayerIcon.bmp" />
+    <None Remove="Icons\MusicPlayerIcon.ico" />
+    <None Remove="Icons\MusicPlayerIcon2.bmp" />
     <None Remove="Icons\MuteIcon.png" />
     <None Remove="Icons\NextIcon.png" />
     <None Remove="Icons\OpenIcon.png" />
@@ -31,6 +35,18 @@
 
   <ItemGroup>
     <Resource Include="Icons\LoopIcon.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icons\MoveToPrevDirIcon.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icons\MusicPlayerIcon.bmp">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icons\MusicPlayerIcon.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icons\MusicPlayerIcon2.bmp">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Icons\MuteIcon.png">

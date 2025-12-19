@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using Microsoft.Win32;
+using System.ComponentModel;
 using System.Configuration;
 using System.Diagnostics;
 using System.IO;
@@ -16,6 +17,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+//using System.Windows.Shapes.Path;
 
 namespace MusicPlayer
 {
@@ -80,6 +82,9 @@ namespace MusicPlayer
             }
         }
 
+
+
+        // app crashes after pressing stop and after that pressing play/pause
         private void StopBtn_Click(object sender, RoutedEventArgs e)
         {
             player.Stop();
@@ -89,7 +94,7 @@ namespace MusicPlayer
 
 
             _timer.Stop();
-            _timer.Dispose();
+            //_timer.Dispose();
         }
 
         private void PlayBtn_Click(object sender, RoutedEventArgs e)
@@ -102,11 +107,9 @@ namespace MusicPlayer
         private void PauseBtn_Click(object sender, RoutedEventArgs e)
         {
             player.Pause();
+            isPaused = true;
             Status.Visibility = Visibility.Visible;
             Status.Content = "(Paused)";
-
-            var pos = player.Position.ToString(@"hh\:mm\:ss");
-            Debug.WriteLine($"position:  {pos}");
         }
 
 
@@ -123,6 +126,8 @@ namespace MusicPlayer
             TrackIndexes.Children.Clear();
 
             tracks = Directory.GetFiles(dir, "*.mp3");
+
+
 
             for(int i = 0; i < tracks.Length; i++)
             {
@@ -220,6 +225,7 @@ namespace MusicPlayer
                 player.Stop();
                 player.Source = new Uri(fullPath);
                 player.Play();
+                PlayPauseBtn.Background = new SolidColorBrush(Colors.Blue);
             }
         }
 
@@ -232,11 +238,6 @@ namespace MusicPlayer
             }
             CURRENT_TRACK_INDEX++;
 
-            //var track = (DockPanel)Tracklist.Children[CURRENT_TRACK_INDEX];
-
-            //var btn = (Button)track.Children[0];
-            //var trackname = btn.Content as string;
-            //var fullPath = System.IO.Path.Combine(Dir.Text, trackname);
             var btn = (Button)TrackNames.Children[CURRENT_TRACK_INDEX];
             var trackname = btn.Content as string;
             var fullPath = System.IO.Path.Combine(Dir.Text, trackname);
@@ -247,6 +248,7 @@ namespace MusicPlayer
                 player.Stop();
                 player.Source = new Uri(fullPath);
                 player.Play();
+                PlayPauseBtn.Background = new SolidColorBrush(Colors.Blue);
             }
         }
 
@@ -345,5 +347,63 @@ namespace MusicPlayer
                 PlayPauseBtn.Background = new SolidColorBrush(Colors.Blue);
             }
         }
+
+        private void AboutItem_Click(object sender, RoutedEventArgs e)
+        {
+            //var aboutWindow = new Window();
+            //aboutWindow.Close?
+            var message = "You can press Enter to close this message box.\nSpecify directory in the Path textbox and press anywhere to lose the focus from the textbox. This will load all .mp3 files from that directory\nPress on tracknames to select a track and start " +
+                "playing it.\n\nDaniil Prybyshchuk 2025";
+            var result = MessageBox.Show(message, "About", MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.OK, MessageBoxOptions.None);
+        }
+
+        private void OpenFileBtn_Click(object sender, RoutedEventArgs e)
+        {
+            var curDir = Dir.Text;
+
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Title = "Select file to open...";
+            openFileDialog.Filter = "Audio file(s) | *.mp3";
+            openFileDialog.DefaultDirectory = curDir;
+            openFileDialog.InitialDirectory = curDir;
+            var result = openFileDialog.ShowDialog();
+
+            if (result != true)
+                return;
+
+            var selectedFilename = openFileDialog.FileName;
+            string? trackName = System.IO.Path.GetFileName(selectedFilename);
+
+            var dir = Directory.GetParent(selectedFilename);
+            Dir.Text = dir.ToString();
+            Dir_LostFocus(this, null);
+
+
+            // TODO: should play the selected track
+
+            //for (int i = 0; i < tracks.Length; i++)
+            //{
+            //    if (trackName == tracks[i].Name)
+            //    {
+            //        player.Play();
+            //    }
+
+            //}
+        }
+
+        private void MoveToPrevDirBtn_Click(object sender, RoutedEventArgs e)
+        {
+            string dir = Dir.Text;
+            var prevDir = Directory.GetParent(dir);
+
+            if (prevDir != null)
+            {
+                Dir.Text = prevDir.ToString();
+                Dir_LostFocus(this, null);
+            }
+        }
+
+
+        //MediaCommands.IncreaseBass
     }
 }

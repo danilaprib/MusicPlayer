@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MusicPlayer"
         mc:Ignorable="d"
+        Icon="/Icons/MusicPlayerIcon2.bmp"
         Title="MusicPlayer" Height="450" Width="1000">
 
 
@@ -47,9 +48,16 @@
             <Setter Property="FontSize" Value="20"></Setter>
             <Setter Property="BorderThickness" Value="0"></Setter>
         </Style>
+        <Style x:Key="MenuItemStyle" TargetType="MenuItem">
+            <Setter Property="FontSize" Value="16"></Setter>
+        </Style>
     </Window.Resources>
+
     
     
+    
+
+
     <Grid>
 
         <Grid.RowDefinitions>
@@ -61,31 +69,33 @@
 
             <DockPanel LastChildFill="False">
                 <Menu VerticalAlignment="Top" DockPanel.Dock="Top">
-                    <MenuItem Header="File" FontSize="16"></MenuItem>
-                    <MenuItem Header="Settings" FontSize="16"></MenuItem>
-                    <MenuItem Header="Themes" FontSize="16"></MenuItem>
-                    <MenuItem Header="Hotkeys" FontSize="16"></MenuItem>
-                    <MenuItem Header="About" FontSize="16"></MenuItem>
+                    <MenuItem Header="File" Style="{StaticResource MenuItemStyle}"></MenuItem>
+                    <MenuItem Header="Settings" Style="{StaticResource MenuItemStyle}"></MenuItem>
+                    <MenuItem Header="Themes" Style="{StaticResource MenuItemStyle}"></MenuItem>
+                    <MenuItem Header="Hotkeys" Style="{StaticResource MenuItemStyle}"></MenuItem>
+                    <MenuItem x:Name="AboutItem" Header="About" Style="{StaticResource MenuItemStyle}" Click="AboutItem_Click"></MenuItem>
                 </Menu>
 
                 <StackPanel Orientation="Horizontal" Height="30"
                            DockPanel.Dock="Top">
-                    <Button>
+                    <Button x:Name="OpenFileBtn" Click="OpenFileBtn_Click"
+                            ToolTip="Open file...">
                         <Image Source="./Icons/OpenIcon.png"></Image>
                     </Button>
                 </StackPanel>
             </DockPanel>
-            
+
         </Grid>
 
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition></ColumnDefinition>
-                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition Width="7*"></ColumnDefinition>
+                <ColumnDefinition Width="243*"/>
+                <ColumnDefinition Width="250*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
 
 
-            <Grid Grid.Column="0">
+            <Grid Grid.Column="0" Grid.ColumnSpan="2">
                 <MediaElement x:Name="player"
                                   LoadedBehavior="Manual" UnloadedBehavior="Close"
                                   MediaOpened="player_MediaOpened" MediaEnded="player_MediaEnded"
@@ -101,13 +111,13 @@
                         CurrentTrack
                     </TextBox>
 
-                    
+
                     <DockPanel LastChildFill="False">
                         <DockPanel LastChildFill="False">
                             <!-- change to TextBox to copy and set the position -->
                             <TextBox DockPanel.Dock="Left" FontSize="14" Margin="5px"
                                        x:Name="Position" Text="{Binding CurrentPosition, UpdateSourceTrigger=PropertyChanged}" Width="120"
-                                     IsReadOnly="True" Background="Gainsboro" Foreground="Black" BorderThickness="0"> 
+                                     IsReadOnly="True" Background="Gainsboro" Foreground="Black" BorderThickness="0">
                             </TextBox>
                             <TextBlock VerticalAlignment="Center">/</TextBlock>
                             <TextBlock DockPanel.Dock="Right" FontSize="14" Margin="5px"
@@ -121,11 +131,11 @@
                         </TextBlock>
                     </DockPanel>
                     <Slider Margin="5px">
-                        
+
                     </Slider>
 
 
-                    
+
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                         <Button x:Name="LoopBtn" Click="LoopBtn_Click"
                                 Style="{StaticResource ControlBtnStyle}" Background="Red">
@@ -174,6 +184,7 @@
                     </StackPanel>
 
 
+                    <!-- might be better to use ListView here-->
                     <ScrollViewer>
                         <DockPanel x:Name="Tracklist" Margin="2">
                             <StackPanel x:Name="TrackIndexes" DockPanel.Dock="Left" VerticalAlignment="Center" Orientation="Vertical">
@@ -187,15 +198,19 @@
                             </StackPanel>
                         </DockPanel>
                     </ScrollViewer>
-                    
+
                 </StackPanel>
             </Grid>
 
-            <Grid Grid.Column="1">
+            <Grid Grid.Column="2">
                 <Border BorderThickness="2px" BorderBrush="Black"></Border>
                 <StackPanel>
                     <DockPanel>
-                        <Label FontSize="18">Path</Label>
+                        <Label FontSize="18" DockPanel.Dock="Left" VerticalAlignment="Center">Path</Label>
+                        <Button DockPanel.Dock="Right" Width="30" Height="30" ToolTip="Move one directory up"
+                                x:Name="MoveToPrevDirBtn" Click="MoveToPrevDirBtn_Click">
+                            <Image Source="/Icons/MoveToPrevDirIcon.png"></Image>
+                        </Button>
                         <TextBox x:Name="Dir" VerticalAlignment="Center" LostFocus="Dir_LostFocus" FontSize="18">
                             C:\Users\danii\Desktop\target\HT
                         </TextBox>
@@ -252,6 +267,6 @@
                 </StackPanel>
             </Grid>
         </Grid>
-        
+
     </Grid>
 </Window>
