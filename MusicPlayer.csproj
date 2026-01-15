@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Icons\EndOfQueueIcon.png" />
     <None Remove="Icons\LoopIcon.png" />
     <None Remove="Icons\MoveToPrevDirIcon.png" />
     <None Remove="Icons\MusicPlayerIcon.bmp" />
@@ -29,11 +30,22 @@
     <None Remove="Icons\PlayIcon.png" />
     <None Remove="Icons\PrevIcon.png" />
     <None Remove="Icons\ReplayIcon.png" />
+    <None Remove="Icons\ScanIcon.png" />
+    <None Remove="Icons\StartOfQueueIcon.png" />
     <None Remove="Icons\StopIcon.png" />
     <None Remove="Icons\StopPressedIcon.png" />
+    <None Remove="Icons\VolumeDownIcon.png" />
+    <None Remove="Icons\VolumeUpIcon.png" />
+    <None Remove="Icons\WhenTrackEndsIcons\NextTrackIcon.png" />
+    <None Remove="Icons\WhenTrackEndsIcons\PlayAgainIcon.png" />
+    <None Remove="Icons\WhenTrackEndsIcons\PrevTrackIcon.png" />
+    <None Remove="Icons\WhenTrackEndsIcons\StopThereIcon.png" />
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Icons\EndOfQueueIcon.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Icons\LoopIcon.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
@@ -73,10 +85,34 @@
     <Resource Include="Icons\ReplayIcon.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Icons\ScanIcon.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icons\StartOfQueueIcon.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Icons\StopIcon.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Icons\StopPressedIcon.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icons\VolumeDownIcon.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icons\VolumeUpIcon.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icons\WhenTrackEndsIcons\NextTrackIcon.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icons\WhenTrackEndsIcons\PlayAgainIcon.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icons\WhenTrackEndsIcons\PrevTrackIcon.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icons\WhenTrackEndsIcons\StopThereIcon.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>

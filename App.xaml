@@ -4,6 +4,6 @@
              xmlns:local="clr-namespace:MusicPlayer"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <ResourceDictionary></ResourceDictionary>
     </Application.Resources>
 </Application>

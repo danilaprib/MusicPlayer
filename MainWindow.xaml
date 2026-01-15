@@ -4,26 +4,27 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MusicPlayer"
+        xmlns:cmds="clr-namespace:MusicPlayer.Commands"
         mc:Ignorable="d"
         Icon="/Icons/MusicPlayerIcon2.bmp"
-        Title="MusicPlayer" Height="450" Width="1000">
+        Title="MusicPlayer" Height="450" Width="1100">
 
 
     <Window.Resources>
 
+        <Style x:Key="MixerBtnStyle" TargetType="Button">
+            <Setter Property="Background" Value="WhiteSmoke"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Width" Value="50"/>
+            <Setter Property="Height" Value="20"/>
+        </Style>
         <Style x:Key="ControlBtnStyle" TargetType="Button">
             <Setter Property="Foreground" Value="White"></Setter>
             <Setter Property="Background" Value="Blue"></Setter>
             <Setter Property="Margin" Value="5px"></Setter>
             <Setter Property="Width" Value="50"></Setter>
             <Setter Property="Height" Value="25"></Setter>
-        </Style>
-        <Style x:Key="PanelBtnStyle" TargetType="Button">
-            <Setter Property="Foreground" Value="White"></Setter>
-            <Setter Property="Background" Value="Red"></Setter>
-            <Setter Property="Margin" Value="2px"></Setter>
-            <Setter Property="Width" Value="20"></Setter>
-            <Setter Property="Height" Value="20"></Setter>
         </Style>
         <Style x:Key="TrackNameStyle" TargetType="Button">
             <Setter Property="Background" Value="Gainsboro"></Setter>
@@ -52,221 +53,252 @@
             <Setter Property="FontSize" Value="16"></Setter>
         </Style>
     </Window.Resources>
+    
+    <Window.InputBindings>
 
-    
-    
-    
+        <!-- CONTROL COMMAND INPUT BINDINGS -->
+        <!-- UP -->
+        <KeyBinding Command="cmds:ControlCommands.VolUp" Key="Up"/>
+        <KeyBinding Command="cmds:ControlCommands.VolUp" Key="W"/>
+        <!-- DOWN -->
+        <KeyBinding Command="cmds:ControlCommands.VolDown" Key="Down"/>
+        <KeyBinding Command="cmds:ControlCommands.VolDown" Key="S"/>
+
+        <!-- TOOLBAR COMMAND INPUT BINDINGS -->
+        <!-- OPEN TRACK -->
+        <KeyBinding Command="cmds:TrackEndsCommands.PlayPrev" Key="O"/>
+        <!-- SCAN -->
+        <KeyBinding Command="cmds:TrackEndsCommands.PlayNext" Key="F"/>
+        <!-- PREV DIR -->
+        <KeyBinding Command="cmds:TrackEndsCommands.StopThere" Key="P"/>
+
+        <!-- TRACK ENDS COMMAND INPUT BINDINGS -->
+        <!-- PREV -->
+        <KeyBinding Command="cmds:TrackEndsCommands.PlayPrev" Key="F1"/>
+        <!-- NEXT -->
+        <KeyBinding Command="cmds:TrackEndsCommands.PlayNext" Key="F2"/>
+        <!-- STOP -->
+        <KeyBinding Command="cmds:TrackEndsCommands.StopThere" Key="F3"/>
+        <!-- AGAIN -->
+        <KeyBinding Command="cmds:TrackEndsCommands.PlayAgain" Key="F4"/>
+
+    </Window.InputBindings>
+
+    <Window.CommandBindings>
+        <!-- CONTROL COMMAND BINDINGS -->
+        <CommandBinding Command="cmds:ControlCommands.VolUp" CanExecute="VolUpCommand_CanExecute" Executed="VolUpCommand_Executed"/>
+        <CommandBinding Command="cmds:ControlCommands.VolDown" CanExecute="VolDownCommand_CanExecute" Executed="VolDownCommand_Executed"/>
+
+        <!-- TOOLBAR COMMAND BINDINGS -->
+        <CommandBinding Command="cmds:ToolBarCommands.OpenTrack" CanExecute="OpenTrackCommand_CanExecute" Executed="OpenTrackCommand_Executed"/>
+        <CommandBinding Command="cmds:ToolBarCommands.Scan" CanExecute="ScanCommand_CanExecute" Executed="ScanCommand_Executed"/>
+        <CommandBinding Command="cmds:ToolBarCommands.PrevDir" CanExecute="PrevDirCommand_CanExecute" Executed="PrevDirCommand_Executed"/>
+
+        
+        <!-- TRACK ENDS COMMAND BINDINGS -->
+        <CommandBinding Command="cmds:TrackEndsCommands.PlayPrev" CanExecute="PlayPrevCommand_CanExecute" Executed="PlayPrevCommand_Executed"/>
+        <CommandBinding Command="cmds:TrackEndsCommands.PlayNext" CanExecute="PlayNextCommand_CanExecute" Executed="PlayNextCommand_Executed"/>
+        <CommandBinding Command="cmds:TrackEndsCommands.StopThere" CanExecute="StopThereCommand_CanExecute" Executed="StopThereCommand_Executed"/>
+        <CommandBinding Command="cmds:TrackEndsCommands.PlayAgain" CanExecute="PlayAgainCommand_CanExecute" Executed="PlayAgainCommand_Executed"/>
+    </Window.CommandBindings>
 
 
     <Grid>
-
         <Grid.RowDefinitions>
-            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition Height="55"></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0">
-
+            <Border BorderThickness="1" BorderBrush="Green"></Border>
             <DockPanel LastChildFill="False">
                 <Menu VerticalAlignment="Top" DockPanel.Dock="Top">
-                    <MenuItem Header="File" Style="{StaticResource MenuItemStyle}"></MenuItem>
-                    <MenuItem Header="Settings" Style="{StaticResource MenuItemStyle}"></MenuItem>
-                    <MenuItem Header="Themes" Style="{StaticResource MenuItemStyle}"></MenuItem>
-                    <MenuItem Header="Hotkeys" Style="{StaticResource MenuItemStyle}"></MenuItem>
-                    <MenuItem x:Name="AboutItem" Header="About" Style="{StaticResource MenuItemStyle}" Click="AboutItem_Click"></MenuItem>
+                    <MenuItem Header="File" FontSize="16"/>
+                    <MenuItem Header="Settings" FontSize="16"/>
+                    <MenuItem Header="About" FontSize="16"/>
                 </Menu>
-
+                
                 <StackPanel Orientation="Horizontal" Height="30"
-                           DockPanel.Dock="Top">
-                    <Button x:Name="OpenFileBtn" Click="OpenFileBtn_Click"
-                            ToolTip="Open file...">
-                        <Image Source="./Icons/OpenIcon.png"></Image>
+                           DockPanel.Dock="Top" Margin="2">
+                    <Button Name="OpenTrackBtn" Width="25" Height="25" ToolTip="Select an audio file..." Click="OpenTrackBtn_Click">
+                        <Image Source="./Icons/OpenIcon.png"/>
+                    </Button>
+                    <Button Name="ScanBtn" Width="25" Height="25" Margin="2" ToolTip="Get all tracks from specified Path" Click="ScanBtn_Click">
+                        <Image Source="./Icons/ScanIcon.png"/>
+                    </Button>
+                    <Button Name="MovePrevDirBtn" DockPanel.Dock="Right" Width="25" Height="25" Margin="2" ToolTip="Move to previous directory" Click="MovePrevDirBtn_Click">
+                        <Image Source="./Icons/MoveToPrevDirIcon.png"/>
                     </Button>
                 </StackPanel>
             </DockPanel>
-
         </Grid>
 
         <Grid Grid.Row="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="7*"></ColumnDefinition>
-                <ColumnDefinition Width="243*"/>
-                <ColumnDefinition Width="250*"></ColumnDefinition>
-            </Grid.ColumnDefinitions>
+            <StackPanel Margin="5">
+                <MediaElement Name="Player" LoadedBehavior="Manual" UnloadedBehavior="Close"
+                              MediaEnded="Player_MediaEnded" MediaOpened="Player_MediaOpened"/>
 
+                <TextBlock FontSize="14" FontWeight="Bold">Path</TextBlock>
+                <TextBox Margin="2" FontSize="18" Name="Dir" TextAlignment="Left"
+                         Background="White">
+                    C:\Users\danii\Desktop\target\M
+                </TextBox>
 
-            <Grid Grid.Column="0" Grid.ColumnSpan="2">
-                <MediaElement x:Name="player"
-                                  LoadedBehavior="Manual" UnloadedBehavior="Close"
-                                  MediaOpened="player_MediaOpened" MediaEnded="player_MediaEnded"
-                              Height="0" Width="0"/>
-                <Border BorderThickness="2px" BorderBrush="Black"></Border>
-                <StackPanel>
-                    <Label x:Name="Status" HorizontalAlignment="Center" FontSize="28px" Visibility="Hidden"></Label>
+                <TextBox Name="CurrentTrack" FontSize="36" HorizontalAlignment="Center" 
+                         Margin="0,20,0,0" Background="Gainsboro" BorderThickness="0"
+                         IsReadOnly="True">...</TextBox>
 
-
-
-                    <TextBox HorizontalAlignment="Center" FontSize="28px" IsReadOnly="True"
-                           x:Name="CurrentTrack" Style="{StaticResource CurrentTrackStyle}">
-                        CurrentTrack
-                    </TextBox>
-
-
-                    <DockPanel LastChildFill="False">
-                        <DockPanel LastChildFill="False">
-                            <!-- change to TextBox to copy and set the position -->
-                            <TextBox DockPanel.Dock="Left" FontSize="14" Margin="5px"
-                                       x:Name="Position" Text="{Binding CurrentPosition, UpdateSourceTrigger=PropertyChanged}" Width="120"
-                                     IsReadOnly="True" Background="Gainsboro" Foreground="Black" BorderThickness="0">
-                            </TextBox>
-                            <TextBlock VerticalAlignment="Center">/</TextBlock>
-                            <TextBlock DockPanel.Dock="Right" FontSize="14" Margin="5px"
-                                       x:Name="Duration"> 
-                            NaturalDuration
-                            </TextBlock>
-                        </DockPanel>
-
-                        <TextBlock DockPanel.Dock="Right" FontSize="14" Margin="5px">
-                            time left: 1:16:21
+                <DockPanel LastChildFill="False">
+                    <DockPanel DockPanel.Dock="Left" LastChildFill="False">
+                        <TextBlock Name="Duration" FontSize="16" Margin="5" TextAlignment="Center" VerticalAlignment="Center">
+                            0:00:00
+                        </TextBlock>
+                        <TextBlock FontSize="16" TextAlignment="Center" VerticalAlignment="Center">/</TextBlock>
+                        <TextBlock FontSize="16" TextAlignment="Center" VerticalAlignment="Center" Margin="2">
+                            0:00:00
                         </TextBlock>
                     </DockPanel>
-                    <Slider Margin="5px">
+                    
+                    <TextBlock DockPanel.Dock="Right" FontSize="16" Margin="5" TextAlignment="Center" VerticalAlignment="Center">
+                        0:59:59
+                    </TextBlock>
+                </DockPanel>
 
-                    </Slider>
+                <Slider Name="Seeker"
+                    Margin="5" Minimum="0" Maximum="100" Value="0"
+                        ValueChanged="Seeker_ValueChanged"/>
+
+                <DockPanel Margin="5">
 
 
+
+
+                    <GroupBox DockPanel.Dock="Right" Margin="5" BorderThickness="1" 
+                              BorderBrush="Blue" Header="Balance" FontSize="18">
+                        <DockPanel DockPanel.Dock="Right" Margin="5">
+                            <Label DockPanel.Dock="Left" FontSize="16" Margin="2" Content="L">
+                                <Label.Effect>
+                                    <DropShadowEffect ShadowDepth="3"></DropShadowEffect>
+                                </Label.Effect>
+                            </Label>
+                            <Label DockPanel.Dock="Right" FontSize="16" Margin="2" Content="R">
+                                <Label.Effect>
+                                    <DropShadowEffect ShadowDepth="3"></DropShadowEffect>
+                                </Label.Effect>
+                            </Label>
+                            <Button DockPanel.Dock="Bottom" Name="BalanceResetBtn" Margin="2" VerticalAlignment="Center" Width="50" Height="25" Click="BalanceResetBtn_Click">Reset</Button>
+                            <Slider Name="BalanceSlider" Minimum="-1" Maximum="1" Value="0" Margin="2" VerticalAlignment="Center" Width="150" ValueChanged="BalanceSlider_ValueChanged"/>
+                        </DockPanel>
+                    </GroupBox>
 
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                        <Button x:Name="LoopBtn" Click="LoopBtn_Click"
-                                Style="{StaticResource ControlBtnStyle}" Background="Red">
-                            loop OFF
+                        <GroupBox Header="When track ends" BorderBrush="Blue" BorderThickness="1" VerticalAlignment="Top">
+                            <StackPanel VerticalAlignment="Top">
+                                <RadioButton Name="rbPlayPrev" GroupName="WhenTrackEnds">
+                                    <DockPanel VerticalAlignment="Center">
+                                        <TextBlock DockPanel.Dock="Right" Margin="2" VerticalAlignment="Center">Play prev. track</TextBlock>
+                                        <Image DockPanel.Dock="Left" Source=".\Icons\WhenTrackEndsIcons\PrevTrackIcon.png"
+                                               Width="15" Height="15" Margin="2"
+                                               VerticalAlignment="Center"/>
+                                    </DockPanel>
+                                </RadioButton>
+                                <RadioButton Name="rbPlayNext" GroupName="WhenTrackEnds" IsChecked="True">
+                                    <DockPanel VerticalAlignment="Center">
+                                        <TextBlock DockPanel.Dock="Right" Margin="2" VerticalAlignment="Center">Play next track</TextBlock>
+                                        <Image DockPanel.Dock="Left" Source=".\Icons\WhenTrackEndsIcons\NextTrackIcon.png"
+                                               Width="15" Height="15" Margin="2"
+                                               VerticalAlignment="Center"/>
+                                    </DockPanel>
+                                </RadioButton>
+                                <RadioButton Name="rbStopThere" GroupName="WhenTrackEnds">
+                                    <DockPanel VerticalAlignment="Center">
+                                        <TextBlock DockPanel.Dock="Right" Margin="2" VerticalAlignment="Center">Stop there</TextBlock>
+                                        <Image DockPanel.Dock="Left" Source=".\Icons\WhenTrackEndsIcons\StopThereIcon.png"
+                                               Width="15" Height="15" Margin="2"
+                                               VerticalAlignment="Center"/>
+                                    </DockPanel>
+                                </RadioButton>
+                                <RadioButton Name="rbPlayAgain" GroupName="WhenTrackEnds">
+                                    <DockPanel VerticalAlignment="Center">
+                                        <TextBlock DockPanel.Dock="Right" Margin="2" VerticalAlignment="Center">Play again</TextBlock>
+                                        <Image DockPanel.Dock="Left" Source=".\Icons\WhenTrackEndsIcons\PlayAgainIcon.png"
+                                               Width="15" Height="15" Margin="2"
+                                               VerticalAlignment="Center"/>
+                                    </DockPanel>
+                                </RadioButton>
+                            </StackPanel>
+                        </GroupBox>
+
+                        <Button Style="{StaticResource ControlBtnStyle}"
+                                Name="ReplayBtn" Click="ReplayBtn_Click">
+                            <Image Source="/Icons/ReplayIcon.png"/>
                         </Button>
-                        <Button x:Name="ReplayBtn" Click="ReplayBtn_Click"
-                                Style="{StaticResource ControlBtnStyle}">
-                            <Image Source="./Icons/ReplayIcon.png"></Image>
+                        <Button Style="{StaticResource ControlBtnStyle}"
+                                Name="StopBtn" Click="StopBtn_Click">
+                            <Image Source="/Icons/StopIcon.png"/>
                         </Button>
-                        <Button x:Name="PrevBtn" Click="PrevBtn_Click"
-                                Style="{StaticResource ControlBtnStyle}">
-                            <Image Source="./Icons/PrevIcon.png"></Image>
+                        <Button Style="{StaticResource ControlBtnStyle}"
+                                Name="PrevBtn" Click="PrevBtn_Click">
+                            <Image Source="/Icons/PrevIcon.png"/>
                         </Button>
-                        <Button x:Name="StopBtn" Click="StopBtn_Click" 
+                        <Button Name="PlayPauseBtn" Click="PlayPauseBtn_Click"
                                 Style="{StaticResource ControlBtnStyle}">
-                            <Image Source="./Icons/StopIcon.png"></Image>
+                            <Image Source="/Icons/PlayIcon.png"/>
+                            
                         </Button>
-                        <Button x:Name="PlayPauseBtn" Click="PlayPauseBtn_Click"
-                                Style="{StaticResource ControlBtnStyle}">
-                            <Image Source="./Icons/PlayIcon.png"></Image>
+                        <Button Style="{StaticResource ControlBtnStyle}"
+                                Name="NextBtn" Click="NextBtn_Click">
+                            <Image Source="/Icons/NextIcon.png"/>
                         </Button>
-                        <Button x:Name="NextBtn" Click="NextBtn_Click"
-                                Style="{StaticResource ControlBtnStyle}">
-                            <Image Source="./Icons/NextIcon.png"></Image>
+                        <Button Style="{StaticResource ControlBtnStyle}"
+                                Name="MuteBtn" Click="MuteBtn_Click">
+                            <Image Source="/Icons/MuteIcon.png"/>
                         </Button>
 
-                        <DockPanel>
-                            <TextBox DockPanel.Dock="Right" x:Name="CurrentVolume" IsReadOnly="True"
-                                     Width="40" TextAlignment="Right"
-                                     Text="{Binding ElementName=Volume, Path=Value, UpdateSourceTrigger=PropertyChanged}">
-                            </TextBox>
-                            <Button x:Name="MuteBtn" Click="MuteBtn_Click"
-                                    Style="{StaticResource PanelBtnStyle}" FontSize="10"
-                                    Width="40" Height="25" Background="Blue"
-                                    VerticalAlignment="Center">
-                                <Image Source="./Icons/MuteIcon.png"></Image>
+                        <RepeatButton x:Name="LowerVolumeRepeatBtn"
+                                      Width="25" Height="25" Click="LowerVolumeRepeatBtn_Click">
+                            <Image Source="/Icons/VolumeDownIcon.png"></Image>
+                        </RepeatButton>
+                        <Slider Name="VolumeSlider" Minimum="0" Maximum="1" Value="0.5" Width="100" Margin="2" 
+                                VerticalAlignment="Center" ValueChanged="VolumeSlider_ValueChanged" Background="Blue"/>
+                        <RepeatButton x:Name="IncreaseVolumeRepeatBtn"
+                                      Width="25" Height="25" Click="IncreaseVolumeRepeatBtn_Click">
+                            <Image Source="/Icons/VolumeUpIcon.png"></Image>
+                        </RepeatButton>
+
+                        <TextBox Name="tbVolume" Height="20" Width="35" Margin="2" IsReadOnly="True"
+                                 Text="50" TextAlignment="Center" VerticalAlignment="Center"></TextBox>
+
+                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <Button Style="{StaticResource ControlBtnStyle}"
+                                    Width="35"
+                                Name="JumpToStartOfQueueBtn" Click="JumpToStartOfQueueBtn_Click"
+                                    ToolTip="Jump to the first track in the queue">
+                                <Image Source="/Icons/StartOfQueueIcon.png"/>
                             </Button>
-                            <Slider x:Name="Volume" Minimum="0" Maximum="1" Value="0.5"
-                                    Width="100" DockPanel.Dock="Left"
-                                    Background="Blue" Margin="2" VerticalAlignment="Center"
-                                    ValueChanged="Volume_ValueChanged">
-                            </Slider>
-
-
-                        </DockPanel>
+                            <Button Style="{StaticResource ControlBtnStyle}"
+                                    Width="35"
+                                Name="JumpToEndOfQueueBtn" Click="JumpToEndOfQueueBtn_Click"
+                                     ToolTip="Jump to the last track in the queue">
+                                <Image Source="/Icons/EndOfQueueIcon.png"/>
+                            </Button>
+                        </StackPanel>
                     </StackPanel>
+                </DockPanel>
+                
+                <ListView Name="lvTracklist" Margin="5" MaxHeight="400" SelectionMode="Single" SelectionChanged="lvTracklist_SelectionChanged" FontSize="20">
 
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn x:Name="Index" DisplayMemberBinding="{Binding Path=TrackIndex}" Header="#" Width="50"></GridViewColumn>
+                            <GridViewColumn x:Name="TrackName" DisplayMemberBinding="{Binding Path=TrackName}" Header="Name" Width="800"></GridViewColumn>
+                            <GridViewColumn x:Name="TrackDuration" DisplayMemberBinding="{Binding Path=TrackDuration}" Header="Duration" Width="100"></GridViewColumn>
+                        </GridView>
+                    </ListView.View>
 
-                    <!-- might be better to use ListView here-->
-                    <ScrollViewer>
-                        <DockPanel x:Name="Tracklist" Margin="2">
-                            <StackPanel x:Name="TrackIndexes" DockPanel.Dock="Left" VerticalAlignment="Center" Orientation="Vertical">
-                                <Label Style="{StaticResource TrackIndexStyle}">1</Label>
-                            </StackPanel>
-
-                            <StackPanel x:Name="TrackNames" DockPanel.Dock="Right" VerticalAlignment="Center" Orientation="Vertical">
-                                <Button VerticalAlignment="Center" Style="{StaticResource TrackNameStyle}">
-                                    TRACK
-                                </Button>
-                            </StackPanel>
-                        </DockPanel>
-                    </ScrollViewer>
-
-                </StackPanel>
-            </Grid>
-
-            <Grid Grid.Column="2">
-                <Border BorderThickness="2px" BorderBrush="Black"></Border>
-                <StackPanel>
-                    <DockPanel>
-                        <Label FontSize="18" DockPanel.Dock="Left" VerticalAlignment="Center">Path</Label>
-                        <Button DockPanel.Dock="Right" Width="30" Height="30" ToolTip="Move one directory up"
-                                x:Name="MoveToPrevDirBtn" Click="MoveToPrevDirBtn_Click">
-                            <Image Source="/Icons/MoveToPrevDirIcon.png"></Image>
-                        </Button>
-                        <TextBox x:Name="Dir" VerticalAlignment="Center" LostFocus="Dir_LostFocus" FontSize="18">
-                            C:\Users\danii\Desktop\target\HT
-                        </TextBox>
-                    </DockPanel>
-                    <DockPanel>
-                        <Label VerticalAlignment="Center">Autoscan</Label>
-                        <CheckBox VerticalAlignment="Center"></CheckBox>
-                        <Label VerticalAlignment="Center">Sort</Label>
-                        <CheckBox VerticalAlignment="Center"></CheckBox>
-                    </DockPanel>
-
-                    <Border Width="200" Height="50"
-                            BorderBrush="Blue" BorderThickness="2">
-                        <DockPanel Width="180">
-                            <Button x:Name="ResetSpeedBtn" Click="ResetSpeedBtn_Click"
-                                DockPanel.Dock="Left" HorizontalAlignment="Center"
-                                Width="40" Height="20">
-                                Reset
-                            </Button>
-                            <Slider Maximum="2" Minimum="0.1" Value="1"
-                                Margin="10" x:Name="Speed"
-                                VerticalAlignment="Center" Width="100"
-                                ValueChanged="Speed_ValueChanged"></Slider>
-                            <TextBox Width="20" Height="20" TextAlignment="Center" IsReadOnly="True"
-                                Text="{Binding ElementName=Speed, Path=Value, UpdateSourceTrigger=PropertyChanged}"></TextBox>
-                        </DockPanel>
-                    </Border>
-
-                    <DockPanel>
-                        <Label>Search</Label>
-                        <TextBox VerticalAlignment="Center" Foreground="Silver">Search tracks by name here...</TextBox>
-                    </DockPanel>
-
-
-                    <Border Width="140"
-                            BorderBrush="Blue" BorderThickness="2">
-                        <DockPanel Width="120">
-
-                            <Label DockPanel.Dock="Left" VerticalAlignment="Center">L</Label>
-                            <Label DockPanel.Dock="Right" VerticalAlignment="Center">R</Label>
-                            <Button x:Name="ResetBalanceBtn" Click="ResetBalanceBtn_Click"
-                                DockPanel.Dock="Bottom" HorizontalAlignment="Center"
-                                Width="40">
-                                Reset
-                            </Button>
-                            <Slider Maximum="1" Minimum="-1" Value="0"
-                                Margin="10" x:Name="Balance"
-                                VerticalAlignment="Center"
-                                ValueChanged="Balance_ValueChanged"></Slider>
-                        </DockPanel>
-                    </Border>
-
-
-                </StackPanel>
-            </Grid>
+                </ListView>
+            </StackPanel>
         </Grid>
-
+        
     </Grid>
 </Window>

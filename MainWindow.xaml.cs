@@ -1,363 +1,210 @@
 ﻿using Microsoft.Win32;
-using System.ComponentModel;
-using System.Configuration;
 using System.Diagnostics;
 using System.IO;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks.Dataflow;
 using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+
 //using System.Windows.Shapes.Path;
 
 namespace MusicPlayer
 {
+
+    // left-right arrow keys move 5 sec forward and back the track (you can specify the number)
+    // up-down keys bring the volume up and down
+
+    // IT CRASHES WHEN REACHING END OF QUEUE
+
+
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window, INotifyPropertyChanged
+    public partial class MainWindow : Window
     {
-        int CURRENT_TRACK_INDEX = 0;
+        // its better to have OnPropertyChanged for current index and just execute different methods 
+        // when index changes
+        // just button methods change the index
+        // and one method that loads the media for the current index
 
-        System.Timers.Timer _timer;
-        DateTime _timerStartedAt;
+        int CURRENT_INDEX = 0;
 
-        string _currentPosition;
+        bool IS_PAUSED = false;
 
-        public string CurrentPosition
-        {
-            get { return _currentPosition; } 
-            set
-            {
-                _currentPosition = value;
-                OnPropertyChanged();
-            }
-        }
+        System.Timers.Timer TIMER_POSITION;
 
-        string[] tracks;
-
-        bool isLooped;
-        bool isPaused = false;
-
-        public event PropertyChangedEventHandler? PropertyChanged;
-
-        public void OnPropertyChanged([CallerMemberName] string val = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(val));
-            //Position.Text = CurrentPosition;
-        }
+        int POSITION = 0; // this is for seeker
 
         public MainWindow()
         {
-            DataContext = this;
             InitializeComponent();
-            isLooped = false;
-            CURRENT_TRACK_INDEX = 0;
 
-            this.Dir_LostFocus(this, null);
-
-        }
-
-        private void LoopBtn_Click(object sender, RoutedEventArgs e)
-        {
-            isLooped = !isLooped;
-            if (isLooped)
-            {
-                LoopBtn.Content = "loop ON";
-                LoopBtn.Background = new SolidColorBrush(Colors.Blue);
-            }
-            else
-            {
-                LoopBtn.Content = "loop OFF";
-                LoopBtn.Background = new SolidColorBrush(Colors.Red);
-            }
+            ScanBtn_Click(this, null);
         }
 
 
-
-        // app crashes after pressing stop and after that pressing play/pause
-        private void StopBtn_Click(object sender, RoutedEventArgs e)
+        private void ScanBtn_Click(object sender, RoutedEventArgs e)
         {
-            player.Stop();
-            Status.Visibility = Visibility.Visible;
-            Status.Content = "(Stopped)";
-            isPaused = true;
-
-
-            _timer.Stop();
-            //_timer.Dispose();
-        }
-
-        private void PlayBtn_Click(object sender, RoutedEventArgs e)
-        {
-            player.Play();
-            Status.Visibility = Visibility.Hidden;
-            Status.Content = string.Empty;
-        }
-
-        private void PauseBtn_Click(object sender, RoutedEventArgs e)
-        {
-            player.Pause();
-            isPaused = true;
-            Status.Visibility = Visibility.Visible;
-            Status.Content = "(Paused)";
-        }
-
-
-        private void Dir_LostFocus(object sender, RoutedEventArgs e)
-        {
-            CURRENT_TRACK_INDEX = 0;
-
+            lvTracklist.Items.Clear();
             var dir = Dir.Text;
-            if (!Directory.Exists(dir))
+            if (Directory.Exists(dir))
             {
-                return;
-            }
-            TrackNames.Children.Clear();
-            TrackIndexes.Children.Clear();
+                var files = Directory.GetFiles(dir, "*mp3");
 
-            tracks = Directory.GetFiles(dir, "*.mp3");
-
-
-
-            for(int i = 0; i < tracks.Length; i++)
-            {
-                Button btn = new Button();
-                var style = TryFindResource("TrackNameStyle");
-                if (style != null)
+                for (int i = 0; i < files.Length; i++)
                 {
-                    btn.Style = (Style)style;
+                    Player.Source = new Uri(files[i]);
+                    var trackName = System.IO.Path.GetFileName(files[i]);
+
+                    lvTracklist.Items.Add(new TrackItem((i + 1), trackName, "0:00:00"));
                 }
-                btn.Click += TrackBtn_Click;
-
-                string trackName = tracks[i].Remove(0, dir.Length + 1);
-                btn.Content = trackName;
-
-                TrackNames.Children.Add(btn);
-
-                Label index = new Label();
-
-                index.FontSize = 18;
-                var temp = i + 1;
-                index.Content = temp.ToString();
-                index.VerticalAlignment = VerticalAlignment.Center;
-                index.FontStyle = FontStyles.Italic;
-
-                TrackIndexes.Children.Add(index);
             }
+
+            lvTracklist.SelectedItem = null;
         }
 
-        private void TrackBtn_Click(Object sender, RoutedEventArgs e)
+        private void lvTracklist_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            _timer = new System.Timers.Timer();
-            _timer.Interval = 1000;
-            _timer.AutoReset = true;
-            _timer.Elapsed += timer_Elapsed;
-
-            Status.Content = string.Empty;
-
-            var btn = (Button)sender;
-            var trackname = btn.Content as string;
-            
-            var fullPath = System.IO.Path.Combine(Dir.Text, trackname);
-
-
-            CURRENT_TRACK_INDEX = TrackNames.Children.IndexOf(btn);
-
-            Debug.WriteLine("CURRENT_TRACK_INDEX: " + CURRENT_TRACK_INDEX);
-
-
-            if (trackname != null)
+            if (lvTracklist.SelectedItem != null)
             {
-                CurrentTrack.Text = trackname;
-                player.Stop();
-                player.Source = new Uri(fullPath);
-                player.Play();
+                var trackItem = (TrackItem)lvTracklist.SelectedItem;
+                CURRENT_INDEX = trackItem.TrackIndex - 1;
+                var fullPath = Path.Combine(Dir.Text, trackItem.TrackName);
+                Player.Source = new Uri(fullPath);
+
+                TIMER_POSITION = new System.Timers.Timer();
+                TIMER_POSITION.AutoReset = true;
+                TIMER_POSITION.Interval = 1000;
+                TIMER_POSITION.Enabled = false;
+                TIMER_POSITION.Elapsed += OnTimerPositionElapsed(TIMER_POSITION, null);
+                TIMER_POSITION.Start();
+
+                Player.Play();
             }
-
-
-            _timer.Start();
-            _timerStartedAt = DateTime.Now;
+            lvTracklist.SelectedItem = null;
         }
 
-        private void timer_Elapsed(object? sender, ElapsedEventArgs e)
+        private ElapsedEventHandler OnTimerPositionElapsed(object sender, EventArgs e)
         {
-            var curPos = e.SignalTime - _timerStartedAt;
-            CurrentPosition = curPos.ToString(@"hh\:mm\:ss");
-            Debug.WriteLine("POSITION: " + CurrentPosition);
+            Debug.WriteLine("Seeker value: " + Seeker.Value.ToString());
+            ++Seeker.Value;
+            Debug.WriteLine("Seeker value: " + Seeker.Value.ToString());
+            return null;
         }
 
-        private void ReplayBtn_Click(object sender, RoutedEventArgs e)
+        private void Player_MediaEnded(object sender, RoutedEventArgs e)
         {
-            Status.Content = string.Empty;
-            player.Stop();
-            player.Play();
-        }
-
-        private void PrevBtn_Click(object sender, RoutedEventArgs e)
-        {
-            if (CURRENT_TRACK_INDEX == 0)
+            if (rbPlayPrev.IsChecked == true)
             {
-                // to jump to end
-                CURRENT_TRACK_INDEX = TrackIndexes.Children.Count;
+                PrevBtn_Click(this, null);
             }
-            CURRENT_TRACK_INDEX--;
-
-
-            //var track = (DockPanel)Tracklist.Children[CURRENT_TRACK_INDEX];
-
-            var btn = (Button)TrackNames.Children[CURRENT_TRACK_INDEX];
-            var trackname = btn.Content as string;
-            var fullPath = System.IO.Path.Combine(Dir.Text, trackname);
-
-            if (trackname != null)
+            else if (rbPlayNext.IsChecked == true)
             {
-                CurrentTrack.Text = trackname;
-                player.Stop();
-                player.Source = new Uri(fullPath);
-                player.Play();
-                PlayPauseBtn.Background = new SolidColorBrush(Colors.Blue);
+                // use method here to load the next track when property changes
+                NextBtn_Click(this, null);
             }
+            else if (rbStopThere.IsChecked == true)
+            {
+                Player.Stop();
+            }
+            else if (rbPlayAgain.IsChecked == true)
+            {
+                Player.Stop();
+                Player.Play();
+            }
+        }
+        private void Player_MediaOpened(object sender, RoutedEventArgs e)
+        {
+            var curTrack = Path.GetFileName(Player.Source.ToString());
+            CurrentTrack.Text = curTrack;
+
+            var duration = Player.NaturalDuration;
+            Seeker.Maximum = duration.TimeSpan.TotalSeconds;
+
+            Duration.Text = duration.ToString();
+            //var dur = Player.NaturalDuration.TimeSpan.ToString(@"hh\:mm\:ss");
+        }
+
+        private void BalanceSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            var slider = (Slider)sender;
+            var balance = slider.Value;
+            Player.Balance = balance;
+        }
+
+        private void BalanceResetBtn_Click(object sender, RoutedEventArgs e)
+        {
+            BalanceSlider.Value = 0;
+            Player.Balance = 0;
         }
 
         private void NextBtn_Click(object sender, RoutedEventArgs e)
         {
-            if (CURRENT_TRACK_INDEX == TrackIndexes.Children.Count - 1)
+            if (CURRENT_INDEX == lvTracklist.Items.Count - 1)
             {
-                // to jump to beginning
-                CURRENT_TRACK_INDEX = -1;
+                CURRENT_INDEX = -1;
             }
-            CURRENT_TRACK_INDEX++;
 
-            var btn = (Button)TrackNames.Children[CURRENT_TRACK_INDEX];
-            var trackname = btn.Content as string;
-            var fullPath = System.IO.Path.Combine(Dir.Text, trackname);
+            CURRENT_INDEX += 1;
 
-            if (trackname != null)
+            LoadTrack(CURRENT_INDEX);
+        }
+
+        private void LoadTrack(int index)
+        {
+            var trackItem = (TrackItem)lvTracklist.Items[index];
+
+            var fullPath = Path.Combine(Dir.Text, trackItem.TrackName);
+
+            Player.Source = new Uri(fullPath);
+            Player.Play();
+        }
+
+        private void PrevBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (CURRENT_INDEX == 0)
             {
-                CurrentTrack.Text = trackname;
-                player.Stop();
-                player.Source = new Uri(fullPath);
-                player.Play();
-                PlayPauseBtn.Background = new SolidColorBrush(Colors.Blue);
+                CURRENT_INDEX = lvTracklist.Items.Count;
             }
-        }
 
-        private void player_MediaEnded(object sender, RoutedEventArgs e)
-        {
-            if (isLooped)
-            {
-                _timer = new System.Timers.Timer();
-                _timer.Interval = 1000;
-                _timer.AutoReset = true;
-                _timer.Elapsed += timer_Elapsed;
+            CURRENT_INDEX -= 1;
 
-                player.Stop();
-                player.Play();
-
-                _timer.Start();
-                _timerStartedAt = DateTime.Now;
-            }
-            else
-            {
-                this.NextBtn_Click(this, null);
-            }
-        }
-
-        private void player_MediaOpened(object sender, RoutedEventArgs e)
-        {
-            string duration = player.NaturalDuration.TimeSpan.ToString(@"hh\:mm\:ss");
-            Duration.Text = duration;
-        }
-
-        private void Volume_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            var volSlider = sender as Slider;
-            var vol = (volSlider.Value);
-
-            player.Volume = vol;
-        }
-
-        private void Balance_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            var balanceSlider = sender as Slider;
-
-            var vol = (balanceSlider.Value);
-
-            player.Balance = vol;
-        }
-
-        private void ResetBalanceBtn_Click(object sender, RoutedEventArgs e)
-        {
-            Balance.Value = 0;
-        }
-
-        private void MuteBtn_Click(object sender, RoutedEventArgs e)
-        {
-            player.IsMuted = !player.IsMuted;
-            if (player.IsMuted)
-            {
-                Volume.Background = new SolidColorBrush(Colors.Red);
-                MuteBtn.Background = new SolidColorBrush(Colors.Red);
-            }
-            else
-            {
-                Volume.Background = new SolidColorBrush(Colors.Blue);
-                MuteBtn.Background = new SolidColorBrush(Colors.Blue);
-            }
-        }
-
-        private void Speed_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            var balanceSlider = sender as Slider;
-
-            var vol = balanceSlider.Value;
-
-            player.SpeedRatio = vol;
-        }
-        private void ResetSpeedBtn_Click(object sender, RoutedEventArgs e)
-        {
-            Speed.Value = 1;
+            LoadTrack(CURRENT_INDEX);
         }
 
         private void PlayPauseBtn_Click(object sender, RoutedEventArgs e)
         {
-            if (player.CanPause && !isPaused)
+            if (!IS_PAUSED)
             {
-                player.Pause();
-                _timer.Stop();
-                isPaused = !isPaused;
+                Player.Pause();
                 PlayPauseBtn.Background = new SolidColorBrush(Colors.Red);
             }
-            else if (isPaused)
+            else
             {
-                player.Play();
-                _timer.Start();
-                isPaused = !isPaused;
-                Status.Content = string.Empty;
+                Player.Play();
                 PlayPauseBtn.Background = new SolidColorBrush(Colors.Blue);
+            }
+
+            IS_PAUSED = !IS_PAUSED;
+        }
+
+        private void MuteBtn_Click(object sender, RoutedEventArgs e)
+        {
+            Player.IsMuted = !Player.IsMuted;
+            if (Player.IsMuted)
+            {
+                MuteBtn.Background = new SolidColorBrush(Colors.Red);
+                VolumeSlider.Background = new SolidColorBrush(Colors.Red);
+            }
+            else
+            {
+                MuteBtn.Background = new SolidColorBrush(Colors.Blue);
+                VolumeSlider.Background = new SolidColorBrush(Colors.Blue);
             }
         }
 
-        private void AboutItem_Click(object sender, RoutedEventArgs e)
-        {
-            //var aboutWindow = new Window();
-            //aboutWindow.Close?
-            var message = "You can press Enter to close this message box.\nSpecify directory in the Path textbox and press anywhere to lose the focus from the textbox. This will load all .mp3 files from that directory\nPress on tracknames to select a track and start " +
-                "playing it.\n\nDaniil Prybyshchuk 2025";
-            var result = MessageBox.Show(message, "About", MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.OK, MessageBoxOptions.None);
-        }
-
-        private void OpenFileBtn_Click(object sender, RoutedEventArgs e)
+        private void OpenTrackBtn_Click(object sender, RoutedEventArgs e)
         {
             var curDir = Dir.Text;
 
@@ -366,44 +213,243 @@ namespace MusicPlayer
             openFileDialog.Filter = "Audio file(s) | *.mp3";
             openFileDialog.DefaultDirectory = curDir;
             openFileDialog.InitialDirectory = curDir;
+
             var result = openFileDialog.ShowDialog();
+
 
             if (result != true)
                 return;
 
             var selectedFilename = openFileDialog.FileName;
-            string? trackName = System.IO.Path.GetFileName(selectedFilename);
+            string? trackName = Path.GetFileName(selectedFilename);
 
             var dir = Directory.GetParent(selectedFilename);
             Dir.Text = dir.ToString();
-            Dir_LostFocus(this, null);
+            ScanBtn_Click(this, null);
 
+            //var index = lvTracklist.Items.IndexOf(trackName);
 
-            // TODO: should play the selected track
+            //(TrackItem)lvTracklist.Items[CURRENT_INDEX];
 
-            //for (int i = 0; i < tracks.Length; i++)
-            //{
-            //    if (trackName == tracks[i].Name)
-            //    {
-            //        player.Play();
-            //    }
-
-            //}
+            for (int i = 0; i < lvTracklist.Items.Count; i++)
+            {
+                var trackItem = (TrackItem)lvTracklist.Items[i];
+                if (trackItem.TrackName == trackName)
+                {
+                    CURRENT_INDEX = i;
+                    var fullPath = Path.Combine(Dir.Text, trackName);
+                    Player.Source = new Uri(fullPath);
+                    Player.Play();
+                    break;
+                }
+            }
         }
 
-        private void MoveToPrevDirBtn_Click(object sender, RoutedEventArgs e)
+        private void ReplayBtn_Click(object sender, RoutedEventArgs e)
         {
+            Player.Stop();
+            Player.Play();
+        }
+
+        private void StopBtn_Click(object sender, RoutedEventArgs e)
+        {
+            Player.Stop();
+            IS_PAUSED = true;
+        }
+
+        private void MovePrevDirBtn_Click(object sender, RoutedEventArgs e)
+        {
+            // need to set cursor to end of Path
+
             string dir = Dir.Text;
             var prevDir = Directory.GetParent(dir);
 
             if (prevDir != null)
             {
                 Dir.Text = prevDir.ToString();
-                Dir_LostFocus(this, null);
+                ScanBtn_Click(this, null);
             }
+        }
+        private void Seeker_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if (Player.CanPause)
+                Player.Pause();
+            
+            var value = (double)e.NewValue;
+            TimeSpan span = TimeSpan.FromSeconds(value);
+            Player.Position = span;
+
+            Player.Play();
+        }
+
+        private void JumpToStartOfQueueBtn_Click(object sender, RoutedEventArgs e)
+        {
+            CURRENT_INDEX = 0;
+
+            var trackItem = (TrackItem)lvTracklist.Items[CURRENT_INDEX];
+
+            var fullPath = Path.Combine(Dir.Text, trackItem.TrackName);
+
+            Player.Source = new Uri(fullPath);
+            Player.Play();
+        }
+
+        private void JumpToEndOfQueueBtn_Click(object sender, RoutedEventArgs e)
+        {
+            CURRENT_INDEX = lvTracklist.Items.Count - 1;
+
+            var trackItem = (TrackItem)lvTracklist.Items[CURRENT_INDEX];
+
+            var fullPath = Path.Combine(Dir.Text, trackItem.TrackName);
+
+            Player.Source = new Uri(fullPath);
+            Player.Play();
+        }
+
+        private void LowerVolumeRepeatBtn_Click(object sender, RoutedEventArgs e)
+        {
+            VolumeSlider.Value -= 0.01;
+        }
+
+        private void IncreaseVolumeRepeatBtn_Click(object sender, RoutedEventArgs e)
+        {
+            VolumeSlider.Value += 0.01;
+        }
+
+        private void VolumeSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            double volume = (double)e.NewValue;
+            double temp = volume * 100;
+            double roundedVolume = Math.Round(temp);
+
+            if (tbVolume != null)
+                tbVolume.Text = roundedVolume.ToString();
+
+            Player.Volume = volume;
+        }
+
+        // vol up command
+        private void VolUpCommand_CanExecute(object sender, System.Windows.Input.CanExecuteRoutedEventArgs e)
+        {
+            bool volDownIsNotPressed = !Keyboard.IsKeyDown(Key.Down) && !Keyboard.IsKeyDown(Key.S);
+            e.CanExecute = volDownIsNotPressed;
+        }
+
+        private void VolUpCommand_Executed(object sender, System.Windows.Input.ExecutedRoutedEventArgs e)
+        {
+            IncreaseVolumeRepeatBtn_Click(this, null);
+        }
+
+        // vol dowwn command
+        private void VolDownCommand_CanExecute(object sender, System.Windows.Input.CanExecuteRoutedEventArgs e)
+        {
+            bool volUpIsNotPressed = !Keyboard.IsKeyDown(Key.Up) && !Keyboard.IsKeyDown(Key.W);
+            e.CanExecute = volUpIsNotPressed;
+        }
+
+        private void VolDownCommand_Executed(object sender, System.Windows.Input.ExecutedRoutedEventArgs e)
+        {
+            LowerVolumeRepeatBtn_Click(this, null);
+        }
+
+        // play prev
+        private void PlayPrevCommand_CanExecute(object sender, System.Windows.Input.CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
+        }
+
+        private void PlayPrevCommand_Executed(object sender, System.Windows.Input.ExecutedRoutedEventArgs e)
+        {
+            rbPlayPrev.IsChecked = true;
+        }
+
+        // play next
+        private void PlayNextCommand_CanExecute(object sender, System.Windows.Input.CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
+        }
+
+        private void PlayNextCommand_Executed(object sender, System.Windows.Input.ExecutedRoutedEventArgs e)
+        {
+            rbPlayNext.IsChecked = true;
         }
 
 
-        //MediaCommands.IncreaseBass
+        // stop there
+        private void StopThereCommand_CanExecute(object sender, System.Windows.Input.CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
+        }
+
+        private void StopThereCommand_Executed(object sender, System.Windows.Input.ExecutedRoutedEventArgs e)
+        {
+            rbStopThere.IsChecked = true;
+        }
+
+
+        // play again
+        private void PlayAgainCommand_CanExecute(object sender, System.Windows.Input.CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
+        }
+
+        private void PlayAgainCommand_Executed(object sender, System.Windows.Input.ExecutedRoutedEventArgs e)
+        {
+            rbPlayAgain.IsChecked = true;
+        }
+
+        // TOOLBAR COMMANDS
+
+        // open track
+
+        private void OpenTrackCommand_CanExecute(object sender, System.Windows.Input.CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
+        }
+
+        private void OpenTrackCommand_Executed(object sender, System.Windows.Input.ExecutedRoutedEventArgs e)
+        {
+            OpenTrackBtn_Click(this, null);
+        }
+
+        // scan 
+
+        private void ScanCommand_CanExecute(object sender, System.Windows.Input.CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
+        }
+
+        private void ScanCommand_Executed(object sender, System.Windows.Input.ExecutedRoutedEventArgs e)
+        {
+            ScanBtn_Click(this, null);
+        }
+
+        // prev dir
+
+        private void PrevDirCommand_CanExecute(object sender, System.Windows.Input.CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
+        }
+
+        private void PrevDirCommand_Executed(object sender, System.Windows.Input.ExecutedRoutedEventArgs e)
+        {
+            MovePrevDirBtn_Click(this, null);
+        }
+
+
+        //private void Dir_Drop(object sender, DragEventArgs e)
+        //{
+        //    if (e.Data.GetDataPresent(DataFormats.FileDrop))
+        //    {
+        //        // Note that you can have more than one file.
+        //        string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+
+        //        foreach (var file in files)
+        //        {
+        //            Console.WriteLine(file.ToString());
+        //        }
+
+        //    }
+        //}
     }
 }

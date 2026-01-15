@@ -3,24 +3,50 @@
   "WorkspaceRootPath": "C:\\Users\\danii\\Desktop\\coding\\MusicPlayer\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\danii\\Desktop\\coding\\MusicPlayer\\Icons\\MusicPlayerIcon.ico||{177559E0-D141-11D0-92DF-00A0C9138C45}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Icons\\MusicPlayerIcon.ico||{177559E0-D141-11D0-92DF-00A0C9138C45}"
+      "AbsoluteMoniker": "D:0:0:{62082A25-5D1E-4E3C-A211-8E17D9F3A003}|MusicPlayer.csproj|c:\\users\\danii\\desktop\\coding\\musicplayer\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{62082A25-5D1E-4E3C-A211-8E17D9F3A003}|MusicPlayer.csproj|solutionrelative:mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{62082A25-5D1E-4E3C-A211-8E17D9F3A003}|MusicPlayer.csproj|c:\\users\\danii\\desktop\\coding\\musicplayer\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
       "RelativeMoniker": "D:0:0:{62082A25-5D1E-4E3C-A211-8E17D9F3A003}|MusicPlayer.csproj|solutionrelative:mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{62082A25-5D1E-4E3C-A211-8E17D9F3A003}|MusicPlayer.csproj|c:\\users\\danii\\desktop\\coding\\musicplayer\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{62082A25-5D1E-4E3C-A211-8E17D9F3A003}|MusicPlayer.csproj|solutionrelative:mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{62082A25-5D1E-4E3C-A211-8E17D9F3A003}|MusicPlayer.csproj|c:\\users\\danii\\desktop\\coding\\musicplayer\\commands\\toolbarcommands.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{62082A25-5D1E-4E3C-A211-8E17D9F3A003}|MusicPlayer.csproj|solutionrelative:commands\\toolbarcommands.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{62082A25-5D1E-4E3C-A211-8E17D9F3A003}|MusicPlayer.csproj|c:\\users\\danii\\desktop\\coding\\musicplayer\\commands\\controlcommands.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{62082A25-5D1E-4E3C-A211-8E17D9F3A003}|MusicPlayer.csproj|solutionrelative:commands\\controlcommands.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{62082A25-5D1E-4E3C-A211-8E17D9F3A003}|MusicPlayer.csproj|c:\\users\\danii\\desktop\\coding\\musicplayer\\commands\\trackendscommands.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{62082A25-5D1E-4E3C-A211-8E17D9F3A003}|MusicPlayer.csproj|solutionrelative:commands\\trackendscommands.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\MSBuild\\Current\\Bin\\amd64\\Microsoft.Common.CurrentVersion.targets||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{62082A25-5D1E-4E3C-A211-8E17D9F3A003}|MusicPlayer.csproj|c:\\users\\danii\\desktop\\coding\\musicplayer\\trackitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{62082A25-5D1E-4E3C-A211-8E17D9F3A003}|MusicPlayer.csproj|solutionrelative:trackitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\danii\\Desktop\\coding\\GroundDroneApp\\Commands\\CameraCommands.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{62082A25-5D1E-4E3C-A211-8E17D9F3A003}|MusicPlayer.csproj|c:\\users\\danii\\desktop\\coding\\musicplayer\\icons\\whentrackendsicons\\playagainicon.png||{58961B49-13E0-48C0-9258-13CBC4D40279}",
+      "RelativeMoniker": "D:0:0:{62082A25-5D1E-4E3C-A211-8E17D9F3A003}|MusicPlayer.csproj|solutionrelative:icons\\whentrackendsicons\\playagainicon.png||{58961B49-13E0-48C0-9258-13CBC4D40279}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{62082A25-5D1E-4E3C-A211-8E17D9F3A003}|MusicPlayer.csproj|c:\\users\\danii\\desktop\\coding\\musicplayer\\app.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{62082A25-5D1E-4E3C-A211-8E17D9F3A003}|MusicPlayer.csproj|solutionrelative:app.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{62082A25-5D1E-4E3C-A211-8E17D9F3A003}|MusicPlayer.csproj|c:\\users\\danii\\desktop\\coding\\musicplayer\\assemblyinfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{62082A25-5D1E-4E3C-A211-8E17D9F3A003}|MusicPlayer.csproj|solutionrelative:assemblyinfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{62082A25-5D1E-4E3C-A211-8E17D9F3A003}|MusicPlayer.csproj|c:\\users\\danii\\desktop\\coding\\musicplayer\\commands\\playercommands.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{62082A25-5D1E-4E3C-A211-8E17D9F3A003}|MusicPlayer.csproj|solutionrelative:commands\\playercommands.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{62082A25-5D1E-4E3C-A211-8E17D9F3A003}|MusicPlayer.csproj|c:\\users\\danii\\desktop\\coding\\musicplayer\\icons\\musicplayericon.ico||{177559E0-D141-11D0-92DF-00A0C9138C45}",
+      "RelativeMoniker": "D:0:0:{62082A25-5D1E-4E3C-A211-8E17D9F3A003}|MusicPlayer.csproj|solutionrelative:icons\\musicplayericon.ico||{177559E0-D141-11D0-92DF-00A0C9138C45}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{62082A25-5D1E-4E3C-A211-8E17D9F3A003}|MusicPlayer.csproj|c:\\users\\danii\\desktop\\coding\\musicplayer\\musicplayer.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
@@ -47,52 +73,119 @@
           ]
         },
         {
-          "DockedHeight": 260,
-          "SelectedChildIndex": 1,
+          "DockedHeight": 380,
+          "SelectedChildIndex": 4,
           "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:1:0:{d212f56b-c48a-434c-a121-1c5d80b59b9f}"
+            },
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "MusicPlayerIcon.ico - Icon [256x256, 32 bit, PNG]",
-              "DocumentMoniker": "C:\\Users\\danii\\Desktop\\coding\\MusicPlayer\\Icons\\MusicPlayerIcon.ico",
-              "RelativeDocumentMoniker": "Icons\\MusicPlayerIcon.ico",
-              "ToolTip": "C:\\Users\\danii\\Desktop\\coding\\MusicPlayer\\Icons\\MusicPlayerIcon.ico - Icon [256x256, 32 bit, PNG]",
-              "RelativeToolTip": "Icons\\MusicPlayerIcon.ico - Icon [256x256, 32 bit, PNG]",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001525|",
-              "WhenOpened": "2025-12-19T15:35:04.385Z",
-              "EditorCaption": " - Icon [256x256, 32 bit, PNG]"
+              "DocumentIndex": 2,
+              "Title": "ToolBarCommands.cs",
+              "DocumentMoniker": "C:\\Users\\danii\\Desktop\\coding\\MusicPlayer\\Commands\\ToolBarCommands.cs",
+              "RelativeDocumentMoniker": "Commands\\ToolBarCommands.cs",
+              "ToolTip": "C:\\Users\\danii\\Desktop\\coding\\MusicPlayer\\Commands\\ToolBarCommands.cs",
+              "RelativeToolTip": "Commands\\ToolBarCommands.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAjAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-15T19:54:01.415Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 4,
-              "Title": "PlayerCommands.cs",
-              "DocumentMoniker": "C:\\Users\\danii\\Desktop\\coding\\MusicPlayer\\Commands\\PlayerCommands.cs",
-              "RelativeDocumentMoniker": "Commands\\PlayerCommands.cs",
-              "ToolTip": "C:\\Users\\danii\\Desktop\\coding\\MusicPlayer\\Commands\\PlayerCommands.cs",
-              "RelativeToolTip": "Commands\\PlayerCommands.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
+              "Title": "TrackEndsCommands.cs",
+              "DocumentMoniker": "C:\\Users\\danii\\Desktop\\coding\\MusicPlayer\\Commands\\TrackEndsCommands.cs",
+              "RelativeDocumentMoniker": "Commands\\TrackEndsCommands.cs",
+              "ToolTip": "C:\\Users\\danii\\Desktop\\coding\\MusicPlayer\\Commands\\TrackEndsCommands.cs",
+              "RelativeToolTip": "Commands\\TrackEndsCommands.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAvAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-17T17:13:00.127Z"
+              "WhenOpened": "2026-01-15T19:10:57.526Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "MusicPlayer.csproj",
-              "DocumentMoniker": "C:\\Users\\danii\\Desktop\\coding\\MusicPlayer\\MusicPlayer.csproj",
-              "RelativeDocumentMoniker": "MusicPlayer.csproj",
-              "ToolTip": "C:\\Users\\danii\\Desktop\\coding\\MusicPlayer\\MusicPlayer.csproj",
-              "RelativeToolTip": "MusicPlayer.csproj",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2025-12-17T17:12:41.47Z"
+              "DocumentIndex": 0,
+              "Title": "MainWindow.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\danii\\Desktop\\coding\\MusicPlayer\\MainWindow.xaml.cs",
+              "RelativeDocumentMoniker": "MainWindow.xaml.cs",
+              "ToolTip": "C:\\Users\\danii\\Desktop\\coding\\MusicPlayer\\MainWindow.xaml.cs",
+              "RelativeToolTip": "MainWindow.xaml.cs",
+              "ViewState": "AgIAAI8AAAAAAAAAAAAkwKEAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-15T14:20:44.411Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "MainWindow.xaml",
+              "DocumentMoniker": "C:\\Users\\danii\\Desktop\\coding\\MusicPlayer\\MainWindow.xaml",
+              "RelativeDocumentMoniker": "MainWindow.xaml",
+              "ToolTip": "C:\\Users\\danii\\Desktop\\coding\\MusicPlayer\\MainWindow.xaml",
+              "RelativeToolTip": "MainWindow.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-12-15T14:20:46.202Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
+              "Title": "ControlCommands.cs",
+              "DocumentMoniker": "C:\\Users\\danii\\Desktop\\coding\\MusicPlayer\\Commands\\ControlCommands.cs",
+              "RelativeDocumentMoniker": "Commands\\ControlCommands.cs",
+              "ToolTip": "C:\\Users\\danii\\Desktop\\coding\\MusicPlayer\\Commands\\ControlCommands.cs",
+              "RelativeToolTip": "Commands\\ControlCommands.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAABkAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-17T17:13:00.127Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "PlayAgainIcon.png",
+              "DocumentMoniker": "C:\\Users\\danii\\Desktop\\coding\\MusicPlayer\\Icons\\WhenTrackEndsIcons\\PlayAgainIcon.png",
+              "RelativeDocumentMoniker": "Icons\\WhenTrackEndsIcons\\PlayAgainIcon.png",
+              "ToolTip": "C:\\Users\\danii\\Desktop\\coding\\MusicPlayer\\Icons\\WhenTrackEndsIcons\\PlayAgainIcon.png",
+              "RelativeToolTip": "Icons\\WhenTrackEndsIcons\\PlayAgainIcon.png",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001533|",
+              "WhenOpened": "2026-01-15T16:49:56.228Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "TrackItem.cs",
+              "DocumentMoniker": "C:\\Users\\danii\\Desktop\\coding\\MusicPlayer\\TrackItem.cs",
+              "RelativeDocumentMoniker": "TrackItem.cs",
+              "ToolTip": "C:\\Users\\danii\\Desktop\\coding\\MusicPlayer\\TrackItem.cs",
+              "RelativeToolTip": "TrackItem.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAZAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-22T13:23:00.569Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "CameraCommands.cs",
+              "DocumentMoniker": "C:\\Users\\danii\\Desktop\\coding\\GroundDroneApp\\Commands\\CameraCommands.cs",
+              "RelativeDocumentMoniker": "..\\GroundDroneApp\\Commands\\CameraCommands.cs",
+              "ToolTip": "C:\\Users\\danii\\Desktop\\coding\\GroundDroneApp\\Commands\\CameraCommands.cs",
+              "RelativeToolTip": "..\\GroundDroneApp\\Commands\\CameraCommands.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-15T18:50:09.534Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
               "Title": "AssemblyInfo.cs",
               "DocumentMoniker": "C:\\Users\\danii\\Desktop\\coding\\MusicPlayer\\AssemblyInfo.cs",
               "RelativeDocumentMoniker": "AssemblyInfo.cs",
@@ -104,46 +197,66 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "MainWindow.xaml",
-              "DocumentMoniker": "C:\\Users\\danii\\Desktop\\coding\\MusicPlayer\\MainWindow.xaml",
-              "RelativeDocumentMoniker": "MainWindow.xaml",
-              "ToolTip": "C:\\Users\\danii\\Desktop\\coding\\MusicPlayer\\MainWindow.xaml",
-              "RelativeToolTip": "MainWindow.xaml",
+              "DocumentIndex": 9,
+              "Title": "App.xaml",
+              "DocumentMoniker": "C:\\Users\\danii\\Desktop\\coding\\MusicPlayer\\App.xaml",
+              "RelativeDocumentMoniker": "App.xaml",
+              "ToolTip": "C:\\Users\\danii\\Desktop\\coding\\MusicPlayer\\App.xaml",
+              "RelativeToolTip": "App.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-12-15T14:20:46.202Z"
+              "WhenOpened": "2025-12-22T14:36:33.399Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "MainWindow.xaml.cs",
-              "DocumentMoniker": "C:\\Users\\danii\\Desktop\\coding\\MusicPlayer\\MainWindow.xaml.cs",
-              "RelativeDocumentMoniker": "MainWindow.xaml.cs",
-              "ToolTip": "C:\\Users\\danii\\Desktop\\coding\\MusicPlayer\\MainWindow.xaml.cs",
-              "RelativeToolTip": "MainWindow.xaml.cs",
-              "ViewState": "AgIAAEIAAAAAAAAAAAD4v1QAAAAuAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-15T14:20:44.411Z"
-            }
-          ]
-        },
-        {
-          "DockedHeight": 258,
-          "SelectedChildIndex": -1,
-          "Children": [
+              "DocumentIndex": 12,
+              "Title": "MusicPlayer.csproj",
+              "DocumentMoniker": "C:\\Users\\danii\\Desktop\\coding\\MusicPlayer\\MusicPlayer.csproj",
+              "RelativeDocumentMoniker": "MusicPlayer.csproj",
+              "ToolTip": "C:\\Users\\danii\\Desktop\\coding\\MusicPlayer\\MusicPlayer.csproj",
+              "RelativeToolTip": "MusicPlayer.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-12-17T17:12:41.47Z"
+            },
             {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "MusicPlayerIcon.ico - Icon [16x16, 8 bit, BMP]",
+              "DocumentMoniker": "C:\\Users\\danii\\Desktop\\coding\\MusicPlayer\\Icons\\MusicPlayerIcon.ico",
+              "RelativeDocumentMoniker": "Icons\\MusicPlayerIcon.ico",
+              "ToolTip": "C:\\Users\\danii\\Desktop\\coding\\MusicPlayer\\Icons\\MusicPlayerIcon.ico - Icon [16x16, 8 bit, BMP]",
+              "RelativeToolTip": "Icons\\MusicPlayerIcon.ico - Icon [16x16, 8 bit, BMP]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001525|",
+              "WhenOpened": "2025-12-19T15:35:04.385Z",
+              "EditorCaption": " - Icon [16x16, 8 bit, BMP]"
             }
           ]
         },
         {
-          "DockedHeight": 137,
-          "SelectedChildIndex": -1,
+          "DockedHeight": 138,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{e1b7d1f8-9b3c-49b1-8f4f-bfc63a88835d}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Microsoft.Common.CurrentVersion.targets",
+              "DocumentMoniker": "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\MSBuild\\Current\\Bin\\amd64\\Microsoft.Common.CurrentVersion.targets",
+              "RelativeDocumentMoniker": "..\\..\\..\\..\\..\\Program Files\\Microsoft Visual Studio\\2022\\Community\\MSBuild\\Current\\Bin\\amd64\\Microsoft.Common.CurrentVersion.targets",
+              "ToolTip": "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\MSBuild\\Current\\Bin\\amd64\\Microsoft.Common.CurrentVersion.targets",
+              "RelativeToolTip": "..\\..\\..\\..\\..\\Program Files\\Microsoft Visual Studio\\2022\\Community\\MSBuild\\Current\\Bin\\amd64\\Microsoft.Common.CurrentVersion.targets",
+              "ViewState": "AgIAAAsVAAAAAAAAAAAUwBEVAAAEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003801|",
+              "WhenOpened": "2026-01-15T19:34:51.924Z",
+              "EditorCaption": ""
             }
           ]
         }
